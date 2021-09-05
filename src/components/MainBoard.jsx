@@ -1,17 +1,30 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
+import { elements, winnerConditions } from '../constants'
+
 
 const MainBoard = props => {
     const [userNumber, setUserNumber] = useState(1)
+    const [onEndGame, setNnEndGame] = useState(false)
     const [squares, setSquares] = useState(JSON.parse(JSON.stringify(elements)))
+    const [playerOneSquaresId, setPlayerOneSquaresId] = useState([])
+    const [playerTwoSquaresId, setPlayerTwoSquaresId] = useState([])
 
     const handleClickOnSquare = (elementId, uNumber) => {
         let tempArray = [...squares]
+        let playerOne = [...playerOneSquaresId]
+        let playerTwo = [...playerTwoSquaresId]
+
         if(tempArray[elementId].owner === null) {
             setUserNumber(userNumber => userNumber === 1 ?  2 : 1)
             tempArray[elementId].owner = uNumber
+            if(uNumber === 1) playerOne.push(elementId)
+            else  playerTwo.push(elementId)
         } 
         else return
+        setPlayerOneSquaresId(playerOne)
+        setPlayerTwoSquaresId(playerTwo)
+        checkWinner(playerOne, playerTwo)
         setSquares(tempArray)
     }
 
@@ -30,6 +43,12 @@ const MainBoard = props => {
     const handleRefresh = () => {
         setUserNumber(1)
         setSquares(JSON.parse(JSON.stringify(elements)))
+    }
+
+    const checkWinner = (playerOne, playerTwo) => {
+        console.log('playerOne', playerOne);
+        console.log('playerTwo', playerTwo);
+        
     }
 
     return (
@@ -60,18 +79,6 @@ const MainBoard = props => {
 }
 
 export default MainBoard
-
-const elements = [
-    {id: 0, owner: null},
-    {id: 1, owner: null},
-    {id: 2, owner: null},
-    {id: 3, owner: null},
-    {id: 4, owner: null},
-    {id: 5, owner: null},
-    {id: 6, owner: null},
-    {id: 7, owner: null},
-    {id: 8, owner: null}
-]
 
 const Container = styled.div`
     height: 100vh;
