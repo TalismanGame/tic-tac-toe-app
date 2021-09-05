@@ -11,13 +11,13 @@ export const elements = [
     {id: 8, owner: null}
 ]
 
-export const winnerConditions = {
-    condition_one: [0,1,2],
-    condition_two: [3,4,5],
-    condition_three: [6,7,8],
-    condition_four: [0,3,6],
-    condition_five: [1,4,7],
-    condition_six: [2,5,8],
-    condition_seven: [0,4,8],
-    condition_eight: [2,4,6]
-}
+export const winnerConditions = [
+    [0,1,2],
+    [3,4,5],
+    [6,7,8],
+    [0,3,6],
+    [1,4,7],
+    [2,5,8],
+    [0,4,8],
+    [2,4,6]
+]

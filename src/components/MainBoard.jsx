@@ -5,7 +5,7 @@ import { elements, winnerConditions } from '../constants'
 
 const MainBoard = props => {
     const [userNumber, setUserNumber] = useState(1)
-    const [onEndGame, setNnEndGame] = useState(false)
+    const [winner, setWinner] = useState({status: false, id: null})
     const [squares, setSquares] = useState(JSON.parse(JSON.stringify(elements)))
     const [playerOneSquaresId, setPlayerOneSquaresId] = useState([])
     const [playerTwoSquaresId, setPlayerTwoSquaresId] = useState([])
@@ -36,19 +36,27 @@ const MainBoard = props => {
                 return 'X'
             default:
                 return null
-                break;
         }
     }
     
     const handleRefresh = () => {
         setUserNumber(1)
         setSquares(JSON.parse(JSON.stringify(elements)))
+        setWinner({status: false, id: null})
+        setPlayerOneSquaresId([])
+        setPlayerTwoSquaresId([])
     }
 
     const checkWinner = (playerOne, playerTwo) => {
-        console.log('playerOne', playerOne);
-        console.log('playerTwo', playerTwo);
-        
+        let stringedPlayerOne = playerOne.sort().join(',')
+        let stringedPlayerTwo = playerTwo.sort().join(',')
+
+        winnerConditions.forEach(condition => {
+            let stringedCondition = condition.sort().join(',')
+
+            if(stringedCondition === stringedPlayerOne) setWinner({status: true, id: 1})
+            if(stringedCondition === stringedPlayerTwo) setWinner({status: true, id: 2})
+        })
     }
 
     return (
@@ -60,16 +68,16 @@ const MainBoard = props => {
             </div>
             <Turn>user number: <span>{userNumber}</span></Turn>
             <BoardWrapper>
-                 {squares.map((el, index) => 
+                {squares.map((el, index) => 
                     <Square 
                         key={el.id}
-                        onClick={() => handleClickOnSquare(el.id, userNumber)}
+                        onClick={() => !winner.status ? handleClickOnSquare(el.id, userNumber) : console.log('wimmer')}
                     >
                         <span>
                             {renderMark(el.owner)}
                         </span>
                     </Square>
-                 )}
+                )}
             </BoardWrapper>
             <RefreshButton onClick={handleRefresh}>
                 <span>Refresh</span>
@@ -100,6 +108,22 @@ const BoardWrapper = styled.div`
     grid-template-rows: 1fr 1fr 1fr;
     grid-row-gap: 5px;
     grid-column-gap: 5px;
+    position: relative;
+    .winnerOverLay{
+        background: #000;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0.7;
+        border-radius: 15px;
+        display: flex;
+        justify-content:center;
+        align-items:center;
+        span{
+            font-size: 30px;
+            color: #fff;
+        }
+    }
 `
 const Square = styled.div`
     background: #525252;
