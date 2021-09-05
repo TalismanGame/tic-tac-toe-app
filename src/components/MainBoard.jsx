@@ -10,8 +10,9 @@ const MainBoard = props => {
     const [playerOneSquaresId, setPlayerOneSquaresId] = useState([])
     const [playerTwoSquaresId, setPlayerTwoSquaresId] = useState([])
 
+    
     const handleClickOnSquare = (elementId, uNumber) => {
-        let tempArray = [...squares]
+        let tempArray = JSON.parse(JSON.stringify(squares))
         let playerOne = [...playerOneSquaresId]
         let playerTwo = [...playerTwoSquaresId]
 
@@ -24,8 +25,7 @@ const MainBoard = props => {
         else return
         setPlayerOneSquaresId(playerOne)
         setPlayerTwoSquaresId(playerTwo)
-        checkWinner(playerOne, playerTwo)
-        setSquares(tempArray)
+        checkWinner(playerOne, playerTwo, tempArray)
     }
 
     const renderMark = (owner) => {
@@ -47,16 +47,27 @@ const MainBoard = props => {
         setPlayerTwoSquaresId([])
     }
 
-    const checkWinner = (playerOne, playerTwo) => {
+    const checkWinner = (playerOne, playerTwo, tempArray) => {
         let stringedPlayerOne = playerOne.sort().join(',')
         let stringedPlayerTwo = playerTwo.sort().join(',')
+        let winnerCondition = []
 
         winnerConditions.forEach(condition => {
             let stringedCondition = condition.sort().join(',')
 
-            if(stringedCondition === stringedPlayerOne) setWinner({status: true, id: 1})
-            if(stringedCondition === stringedPlayerTwo) setWinner({status: true, id: 2})
+            if(stringedCondition === stringedPlayerOne) {setWinner({status: true, id: 1}); winnerCondition = condition}
+            if(stringedCondition === stringedPlayerTwo) {setWinner({status: true, id: 2}); winnerCondition = condition}
         })
+        
+        if(winnerCondition.length > 0) {
+            tempArray.forEach(s => {
+               if(winnerCondition.includes(s.id)) {
+                   s.isWinnerSquare = true
+               } 
+               return s
+            })
+        }
+        setSquares(tempArray)
     }
 
     return (
@@ -71,7 +82,8 @@ const MainBoard = props => {
                 {squares.map((el, index) => 
                     <Square 
                         key={el.id}
-                        onClick={() => !winner.status ? handleClickOnSquare(el.id, userNumber) : console.log('wimmer')}
+                        isWinnerSquare={el.isWinnerSquare}
+                        onClick={() => !winner.status && handleClickOnSquare(el.id, userNumber)}
                     >
                         <span>
                             {renderMark(el.owner)}
@@ -133,7 +145,7 @@ const Square = styled.div`
     border-radius: 15px;
     span{
         font-size: 50px;
-        color: #fff
+        color: ${p => p. isWinnerSquare ? 'orange': '#fff'}
     }
 `
 const Turn = styled.span`

@@ -1,14 +1,14 @@
 
 export const elements = [
-    {id: 0, owner: null},
-    {id: 1, owner: null},
-    {id: 2, owner: null},
-    {id: 3, owner: null},
-    {id: 4, owner: null},
-    {id: 5, owner: null},
-    {id: 6, owner: null},
-    {id: 7, owner: null},
-    {id: 8, owner: null}
+    {id: 0, owner: null, isWinnerSquare: false},
+    {id: 1, owner: null, isWinnerSquare: false},
+    {id: 2, owner: null, isWinnerSquare: false},
+    {id: 3, owner: null, isWinnerSquare: false},
+    {id: 4, owner: null, isWinnerSquare: false},
+    {id: 5, owner: null, isWinnerSquare: false},
+    {id: 6, owner: null, isWinnerSquare: false},
+    {id: 7, owner: null, isWinnerSquare: false},
+    {id: 8, owner: null, isWinnerSquare: false}
 ]
 
 export const winnerConditions = [
