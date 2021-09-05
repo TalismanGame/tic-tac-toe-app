@@ -145,7 +145,7 @@ const Square = styled.div`
     border-radius: 15px;
     span{
         font-size: 50px;
-        color: ${p => p. isWinnerSquare ? 'orange': '#fff'}
+        color: ${p => p. isWinnerSquare ? '#ffcb55': '#fff'}
     }
 `
 const Turn = styled.span`
