@@ -13,8 +13,8 @@ const MainBoard = props => {
     
     const handleClickOnSquare = (elementId, uNumber) => {
         let tempArray = JSON.parse(JSON.stringify(squares))
-        let playerOne = [...playerOneSquaresId]
-        let playerTwo = [...playerTwoSquaresId]
+        const playerOne = [...playerOneSquaresId]
+        const playerTwo = [...playerTwoSquaresId]
 
         if(tempArray[elementId].owner === null) {
             setUserNumber(userNumber => userNumber === 1 ?  2 : 1)
@@ -28,28 +28,9 @@ const MainBoard = props => {
         checkWinner(playerOne, playerTwo, tempArray)
     }
 
-    const renderMark = (owner) => {
-        switch (owner) {
-            case 1:
-                return 'O'
-            case 2:
-                return 'X'
-            default:
-                return null
-        }
-    }
-    
-    const handleRefresh = () => {
-        setUserNumber(1)
-        setSquares(JSON.parse(JSON.stringify(elements)))
-        setWinner({status: false, id: null})
-        setPlayerOneSquaresId([])
-        setPlayerTwoSquaresId([])
-    }
-
     const checkWinner = (playerOne, playerTwo, tempArray) => {
-        let stringedPlayerOne = playerOne.sort().join(',')
-        let stringedPlayerTwo = playerTwo.sort().join(',')
+        const stringedPlayerOne = playerOne.sort().join(',')
+        const stringedPlayerTwo = playerTwo.sort().join(',')
         let winnerCondition = []
 
         winnerConditions.forEach(condition => {
@@ -60,14 +41,33 @@ const MainBoard = props => {
         })
         
         if(winnerCondition.length > 0) {
-            tempArray.forEach(s => {
-               if(winnerCondition.includes(s.id)) {
-                   s.isWinnerSquare = true
-               } 
-               return s
+            tempArray.forEach(square => {
+                if(winnerCondition.includes(square.id)) {
+                    square.isWinnerSquare = true
+                } 
+               return square
             })
         }
         setSquares(tempArray)
+    }
+
+    const handleRefresh = () => {
+        setUserNumber(1)
+        setSquares(JSON.parse(JSON.stringify(elements)))
+        setWinner({status: false, id: null})
+        setPlayerOneSquaresId([])
+        setPlayerTwoSquaresId([])
+    }
+
+    const renderMark = (owner) => {
+        switch (owner) {
+            case 1:
+                return 'O'
+            case 2:
+                return 'X'
+            default:
+                return null
+        }
     }
 
     return (
