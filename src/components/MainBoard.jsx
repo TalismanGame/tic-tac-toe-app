@@ -132,14 +132,14 @@ const BoardWrapper = styled.div`
     }
 `
 const Square = styled.div`
-    background: #525252;
+    background: ${p => p.isWinnerSquare ? '#2b2101' : "#525252"};
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 15px;
     span{
         font-size: 50px;
-        color: ${p => p. isWinnerSquare ? '#ffcb55': '#fff'}
+        color: ${p => p.isWinnerSquare ? '#ffcb55': '#fff'};
     }
 `
 const Turn = styled.span`
