@@ -29,25 +29,19 @@ const MainBoard = props => {
     }
 
     const checkWinner = (playerOne, playerTwo, tempArray) => {
-        const stringedPlayerOne = playerOne.sort().join(',')
-        const stringedPlayerTwo = playerTwo.sort().join(',')
         let winnerCondition = []
 
         winnerConditions.forEach(condition => {
-            let stringedCondition = condition.sort().join(',')
-
-            if(stringedCondition === stringedPlayerOne) {setWinner({status: true, id: 1}); winnerCondition = condition}
-            if(stringedCondition === stringedPlayerTwo) {setWinner({status: true, id: 2}); winnerCondition = condition}
+            if (condition.every(squareNum => playerOne.includes(squareNum))) {setWinner({status: true, id: 1, condition}); winnerCondition = condition}
+            if (condition.every(squareNum => playerTwo.includes(squareNum))) {setWinner({status: true, id: 2, condition}); winnerCondition = condition}
         })
-        
-        if(winnerCondition.length > 0) {
-            tempArray.forEach(square => {
-                if(winnerCondition.includes(square.id)) {
-                    square.isWinnerSquare = true
-                } 
-               return square
-            })
-        }
+
+        tempArray.forEach(square => {
+            if(winnerCondition.includes(square.id)){
+                square.isWinnerSquare = true
+            }
+        })
+
         setSquares(tempArray)
     }
 
@@ -169,5 +163,3 @@ const RefreshButton = styled.button`
         color: #fff
     }
 `
-
-
