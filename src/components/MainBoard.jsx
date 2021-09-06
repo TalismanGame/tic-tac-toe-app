@@ -73,7 +73,7 @@ const MainBoard = props => {
             </div>
             <Turn>user number: <span>{userNumber}</span></Turn>
             <BoardWrapper>
-                {squares.map((el, index) => 
+                {squares.map(el => 
                     <Square 
                         key={el.id}
                         isWinnerSquare={el.isWinnerSquare}
