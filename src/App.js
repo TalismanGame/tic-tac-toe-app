@@ -1,13 +1,16 @@
 import logo from './logo.svg';
 import './App.css';
-import MainBoard from './components/MainBoard'
+import CustomRouter from './routes'
+
 
 function App() {
   return (
-    <div className="App">
-      <MainBoard />
-    </div>
+      <>
+        <CustomRouter />
+      </>
   );
 }
 
 export default App;
+
+

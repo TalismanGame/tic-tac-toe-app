@@ -67,11 +67,8 @@ const MainBoard = props => {
     return (
         <Container>
             <div className='pageHeader'>
-                <span style={{color: 'purple'}}>&hearts;</span> 
-                <span>(: tic toc toe :)</span> 
-                <span style={{color: 'purple'}}>&hearts;</span>
+                <Turn>user number: <span>{userNumber}</span></Turn>
             </div>
-            <Turn>user number: <span>{userNumber}</span></Turn>
             <BoardWrapper>
                 {squares.map(el => 
                     <Square 
