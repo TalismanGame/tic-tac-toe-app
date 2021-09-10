@@ -3,22 +3,40 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link
-  } from "react-router-dom"
-import MainBoard from '../screens/MainBoard'
-import Home from '../screens/Home'
-import CreateGame from '../screens/CreateGame'
+    Redirect,
+    useHistory,
+    useLocation
+} from "react-router-dom"
+import { routes } from '../constants/routes'
+import { connect } from 'react-redux'
+
+const CustomRouter = ({isAuthenticated , ...props}) => {
+  const location = useLocation()
+  
 
 
-const CustomRouter = props => {
-     return (
-        <Switch>
-            <Route exact path="/" children={<Home />} />
-            <Route path="/board" children={<MainBoard />} />
-            <Route path="/create-game" children={<CreateGame />} />
-        </Switch>
-     )
+  return (
+    <Switch>
+      {routes
+        .map((route, index) => 
+          <Route
+            key={index} 
+            exact={route.exact} 
+            path={route.path} 
+            children={route.children}
+          />
+      )}
+    </Switch>
+  )
 }
 
-export default CustomRouter
+export default connect(state => ({isAuthenticated: state.general.isAuthenticated}))(CustomRouter)
 
+
+{/* <Redirect
+          key={index}
+          to={{
+            pathname: "/",
+            
+          }}
+        /> */}
