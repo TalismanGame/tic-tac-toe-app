@@ -7,13 +7,15 @@ import {
   } from "react-router-dom"
 import MainBoard from '../screens/MainBoard'
 import Home from '../screens/Home'
+import CreateGame from '../screens/CreateGame'
 
 
 const CustomRouter = props => {
      return (
         <Switch>
             <Route exact path="/" children={<Home />} />
-            <Route exact path="/board" children={<MainBoard />} />
+            <Route path="/board" children={<MainBoard />} />
+            <Route path="/create-game" children={<CreateGame />} />
         </Switch>
      )
 }

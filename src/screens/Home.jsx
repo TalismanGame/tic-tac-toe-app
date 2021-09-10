@@ -2,9 +2,12 @@ import React, {useState} from 'react'
 import styled from 'styled-components'
 import { elements, winnerConditions } from '../constants'
 import AuthCard from '../components/AuthCard'
+import { useHistory } from "react-router-dom";
 
 
 const Home = props => {
+    const history = useHistory()
+
     const [authForm, updateAuthForm] = useState({
         username: '',
         password: '',
@@ -18,11 +21,11 @@ const Home = props => {
     }
 
     const handleLogin = () => {
-        
+        history.push('/create-game')
     }
 
     const handleRegister = () => {
-
+        history.push('/create-game')
     }
 
     const authButtonRenderer = () => {
