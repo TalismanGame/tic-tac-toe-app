@@ -1,10 +1,11 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
 import { useHistory } from "react-router-dom";
-import customToast from '../utils/toast'
 
+import customToast from '../utils/toast'
 import AuthCard from '../components/AuthCard'
 import { registerUser } from '../api/auth'
+import { staticMessages } from '../constants/staticMessages';
 
 const Home = props => {
     const history = useHistory()
@@ -34,8 +35,7 @@ const Home = props => {
                 history.push('/create-game')
             }
         }catch(e) {
-            customToast.success('dfwefnerng');
-            console.log('esss', e);
+            customToast.error(staticMessages[e.data.error]);
         }
     }
 
