@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 
 import customToast from '../utils/toast'
 import AuthCard from '../components/AuthCard'
-import { registerUser } from '../api/auth'
+import { registerUser, loginUser } from '../api/auth'
 import { staticMessages } from '../constants/staticMessages';
 
 const Home = props => {
@@ -22,17 +22,26 @@ const Home = props => {
         updateAuthForm({...authForm, [name]: value })
     }
 
-    const handleLogin = () => {
-        history.push('/create-game')
+    const handleLogin = async () => {
+        try{
+            let res = await loginUser(authForm)
+            if(res.status === 200) {
+                
+                customToast.success('loggin successfully done');
+                history.push('/create-game')
+            }
+            
+        }catch(e) {
+            customToast.error(staticMessages[e.data.error]);
+        }
     }
 
     const handleRegister = async () => {
         try{
             let res = await registerUser(authForm)
-            console.log(res);
             if(res.status === 201) {
-                customToast.info('dfwefnerng');
-                history.push('/create-game')
+                customToast.success('user created successfully. you can logging now');
+                changeIsLoginProcess(!isLoginProcess)
             }
         }catch(e) {
             customToast.error(staticMessages[e.data.error]);
