@@ -26,7 +26,6 @@ const Home = props => {
         try{
             let res = await loginUser(authForm)
             if(res.status === 200) {
-                
                 customToast.success('loggin successfully done');
                 history.push('/create-game')
             }
