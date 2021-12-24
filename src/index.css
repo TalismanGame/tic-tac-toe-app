@@ -13,22 +13,16 @@ code {
 }
 
 .toast-success-container {
-  color: #fff !important;
-  border-bottom-right-radius: 8px !important;
-  border-bottom-left-radius: 8px !important;
-  background: #007300 !important;
+  color: #000 !important;
+  background: #d9ffd9 !important;
 }
 
 .toast-error-container {
-  color: red !important;
-  border-bottom-right-radius: 8px !important;
-  border-bottom-left-radius: 8px !important;
-  background: red !important;
+  color: #000 !important;
+  background: #fdd !important;
 }
 
 .toast-info-container {
   color: blue !important;
-  border-bottom-right-radius: 8px !important;
-  border-bottom-left-radius: 8px !important;
-  background: blue !important;
+  background: #e1f6ff !important;
 }

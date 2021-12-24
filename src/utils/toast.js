@@ -17,7 +17,7 @@ const customToast = {
       ...options,
       className: 'toast-error-container toast-error-container-after',
       progressClassName: css({
-        background: '#EE0022',
+        backgroundColor: 'yellow',
       }),
     });
   },
@@ -26,7 +26,7 @@ const customToast = {
       ...options,
       className: 'toast-info-container toast-info-container-after',
       progressClassName: css({
-        background: '#07F',
+        background: 'green',
       }),
     });
   },
