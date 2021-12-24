@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
 import { useHistory } from "react-router-dom";
+import customToast from '../utils/toast'
 
 import AuthCard from '../components/AuthCard'
 import { registerUser } from '../api/auth'
@@ -27,9 +28,13 @@ const Home = props => {
     const handleRegister = async () => {
         try{
             let res = await registerUser(authForm)
-            history.push('/create-game')
             console.log(res);
+            if(res.status === 201) {
+                customToast.info('dfwefnerng');
+                history.push('/create-game')
+            }
         }catch(e) {
+            customToast.success('dfwefnerng');
             console.log('esss', e);
         }
     }
