@@ -14,7 +14,6 @@ const fetchAPI = function ({ url, method, data, hasFile, forcedToken, version, c
             },
             ...config
         }
-
         // const token = forcedToken || Cookies.get('token')
 
         // if (token) {
