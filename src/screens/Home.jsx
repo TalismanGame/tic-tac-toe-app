@@ -1,9 +1,9 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
-import { elements, winnerConditions } from '../constants'
-import AuthCard from '../components/AuthCard'
 import { useHistory } from "react-router-dom";
 
+import AuthCard from '../components/AuthCard'
+import { loginUser } from '../api/auth'
 
 const Home = props => {
     const history = useHistory()
@@ -24,8 +24,16 @@ const Home = props => {
         history.push('/create-game')
     }
 
-    const handleRegister = () => {
-        history.push('/create-game')
+    const handleRegister = async () => {
+        try{
+            let res = await loginUser(authForm)
+            history.push('/create-game')
+            console.log(res);
+        }catch(e) {
+            console.log('e', e);
+        }
+        
+        
     }
 
     const authButtonRenderer = () => {
