@@ -13,25 +13,22 @@ code {
 }
 
 .toast-success-container {
-  color: #000 !important;
-  border-radius: 8px !important;
+  color: #fff !important;
+  border-bottom-right-radius: 8px !important;
+  border-bottom-left-radius: 8px !important;
+  background: #007300 !important;
+}
+
+.toast-error-container {
+  color: red !important;
+  border-bottom-right-radius: 8px !important;
+  border-bottom-left-radius: 8px !important;
   background: red !important;
-  border: 1px solid #34A853 !important;
-  box-shadow: 0px 1px 5px rgba(248, 175, 175, 0.1) !important;
 }
 
-.toast-success-container-after {
-  overflow: hidden;
-  position: relative;
-}
-
-.toast-success-container-after::after{
-  top: 0;
-  left: 0;
-  content: '';
-  width: 7px;
-  height: 100%;
-  position: absolute;
-  display: inline-block;
-  background-color: #34A853;
+.toast-info-container {
+  color: blue !important;
+  border-bottom-right-radius: 8px !important;
+  border-bottom-left-radius: 8px !important;
+  background: blue !important;
 }

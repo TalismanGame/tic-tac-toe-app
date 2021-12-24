@@ -34,7 +34,7 @@ const Home = props => {
                 history.push('/create-game')
             }
         }catch(e) {
-            customToast.success('dfwefnerng');
+            customToast.error('dfwefnerng');
             console.log('esss', e);
         }
     }

@@ -22,7 +22,7 @@ const customToast = {
     });
   },
   info(msg, options = {}) {
-    return toast.error(msg, {
+    return toast.info(msg, {
       ...options,
       className: 'toast-info-container toast-info-container-after',
       progressClassName: css({
