@@ -1,8 +1,6 @@
-import { getRequest, postRequest, patchRequest, deleteRequest } from './'
+import fetchAPI  from './'
 
-
-
-export const loginUser = async payload => {
-    await postRequest('auth/register/', payload)
+export const registerUser = async payload => {
+    return await fetchAPI({ url: '/auth/register/', method: 'POST', data: payload })
 }
 

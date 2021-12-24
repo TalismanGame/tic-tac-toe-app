@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useHistory } from "react-router-dom";
 
 import AuthCard from '../components/AuthCard'
-import { loginUser } from '../api/auth'
+import { registerUser } from '../api/auth'
 
 const Home = props => {
     const history = useHistory()
@@ -26,14 +26,12 @@ const Home = props => {
 
     const handleRegister = async () => {
         try{
-            let res = await loginUser(authForm)
+            let res = await registerUser(authForm)
             history.push('/create-game')
             console.log(res);
         }catch(e) {
-            console.log('e', e);
+            console.log('esss', e);
         }
-        
-        
     }
 
     const authButtonRenderer = () => {
