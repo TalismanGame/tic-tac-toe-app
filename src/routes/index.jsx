@@ -1,28 +1,36 @@
 import React, {useState} from 'react'
 import {
-    BrowserRouter as Router,
-    Switch,
+    Routes,
     Route,
     Redirect,
-    useHistory,
-    useLocation
 } from "react-router-dom"
-import { routes } from '../constants/routes'
+
+import MainBoard from '../screens/MainBoard'
+import Home from '../screens/Home'
+import CreateGame from '../screens/CreateGame'
+import NotFoundPage from '../screens/NotFoundPage'
 
 const CustomRouter = props => {
-
+  
   return (
-    <Switch>
-      {routes
-        .map((route, index) => 
-          <Route
-            key={index} 
-            exact={route.exact} 
-            path={route.path} 
-            children={route.children}
-          />
-      )}
-    </Switch>
+    <Routes>
+      <Route 
+        path="/" 
+        element={<Home />}
+      />
+      <Route 
+        path="/create-game/*" 
+        element={<CreateGame />}
+      />
+      <Route 
+        path="/board/*" 
+        element={<MainBoard />}
+      />
+      <Route 
+        path="/404" 
+        element={<NotFoundPage />}
+      />
+    </Routes>
   )
 }
 
