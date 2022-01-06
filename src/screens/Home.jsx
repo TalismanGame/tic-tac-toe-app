@@ -35,7 +35,7 @@ const Home = props => {
                 user.updateUserInfo({
                     ...res.data.user
                 })
-                // history.replace('/create-game')
+                history.replace('/create-game')
             }
             
         }catch(e) {
@@ -48,10 +48,10 @@ const Home = props => {
             let res = await registerUser(authForm)
             if(res.status === 201) {
                 customToast.success('user created successfully. you can logging now');
-                // history.replace('/create-game')
                 user.updateUserInfo({
                     ...res.data.user
                 })
+                history.replace('/create-game')
             }
         }catch(e) {
             customToast.error(staticMessages[e.data.error]);
