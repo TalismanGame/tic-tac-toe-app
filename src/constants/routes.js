@@ -2,6 +2,7 @@
 import MainBoard from '../screens/MainBoard'
 import Home from '../screens/Home'
 import CreateGame from '../screens/CreateGame'
+import NotFoundPage from '../screens/NotFoundPage'
 
 
 export const routes = [
@@ -22,5 +23,11 @@ export const routes = [
         children: <MainBoard />,
         isPrivate: true,
         exact: false
+    },
+    {
+        path: "/404",
+        children: <NotFoundPage />,
+        isPrivate: false,
+        exact: true
     },
 ]

@@ -35,7 +35,8 @@ const Home = props => {
             if(res.status === 200) {
                 customToast.success('loggin successfully done');
                 user.updateUserInfo({
-                    ...res.data.user
+                    ...res.data.user,
+                    isLoggedIn: true
                 })
                 localStorage.setItem('token', res.data.token)
                 history.replace('/create-game')
@@ -54,7 +55,8 @@ const Home = props => {
             if(res.status === 201) {
                 customToast.success('user created successfully. you can logging now');
                 user.updateUserInfo({
-                    ...res.data.user
+                    ...res.data.user,
+                    isLoggedIn: true
                 })
                 localStorage.setItem('token', res.data.token)
                 history.replace('/create-game')

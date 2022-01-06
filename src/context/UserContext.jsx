@@ -2,13 +2,20 @@
 import React, { createContext, useState, useEffect } from "react";
 
 
+const defaultUserObj = {
+  username: '',
+  email: '',
+  isLoggedIn: false
+}
+
 const UserContext = createContext();
+
 const UserContextProvider = ({ children }) => {
   const { localStorage } = window
   let myStoredUserInfo = localStorage.getItem('user')
 
   // the value that will be given to the context
-  const [user, updateUser] = useState(JSON.parse(myStoredUserInfo));
+  const [user, updateUser] = useState(myStoredUserInfo ? JSON.parse(myStoredUserInfo) : defaultUserObj);
 
   const updateUserInfo = (data) => {
     localStorage.setItem('user', JSON.stringify(data))

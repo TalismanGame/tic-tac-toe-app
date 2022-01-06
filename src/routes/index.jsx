@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {
     BrowserRouter as Router,
     Switch,
@@ -8,12 +8,8 @@ import {
     useLocation
 } from "react-router-dom"
 import { routes } from '../constants/routes'
-import { connect } from 'react-redux'
 
-const CustomRouter = ({isAuthenticated , ...props}) => {
-  const location = useLocation()
-  
-
+const CustomRouter = props => {
 
   return (
     <Switch>
@@ -30,13 +26,4 @@ const CustomRouter = ({isAuthenticated , ...props}) => {
   )
 }
 
-export default connect(state => ({isAuthenticated: state.general.isAuthenticated}))(CustomRouter)
-
-
-{/* <Redirect
-          key={index}
-          to={{
-            pathname: "/",
-            
-          }}
-        /> */}
+export default CustomRouter
