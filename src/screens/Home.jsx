@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
 import { useHistory } from "react-router-dom";
-import { useSelector } from 'react-redux'
+// import { useSelector } from 'react-redux'
 
 import customToast from '../utils/toast'
 import AuthCard from '../components/AuthCard'
@@ -13,9 +13,9 @@ import { useUserContext } from '../hooks/useUserContext'
 const Home = props => {
     const history = useHistory()
     const user = useUserContext()
-    const reduxUser = useSelector(state => state.general)
-    console.log('reduxUser', reduxUser);
-    console.log('user', user);
+    // const reduxUser = useSelector(state => state.general)
+    
+   
     const [authForm, updateAuthForm] = useState({
         username: '',
         password: '',

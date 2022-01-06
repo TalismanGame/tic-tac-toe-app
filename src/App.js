@@ -2,22 +2,21 @@ import React, { useEffect } from 'react'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useDispatch } from 'react-redux'
+// import { useDispatch } from 'react-redux'
 
 import './App.css';
 import CustomRouter from './routes'
 import { UserContextProvider } from "./context/UserContext";
-import { changeUserInfo } from './actions'
 
 function App() {
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
 
-  useEffect(() => {
-    dispatch(changeUserInfo({
-      name: 'hossein',
-      age: 26
-    }))
-  }, [])
+  // useEffect(() => {
+  //   dispatch(changeUserInfo({
+  //     name: 'hossein',
+  //     age: 26
+  //   }))
+  // }, [])
 
   return (
     <>
