@@ -29,6 +29,7 @@ const Home = props => {
 
     const handleLogin = async () => {
         try{
+            setLoading(true)
             let res = await loginUser(authForm)
             if(res.status === 200) {
                 customToast.success('loggin successfully done');
@@ -37,14 +38,16 @@ const Home = props => {
                 })
                 history.replace('/create-game')
             }
-            
+            setLoading(false)
         }catch(e) {
+            setLoading(false)
             customToast.error(staticMessages[e.data.error]);
         }
     }
 
     const handleRegister = async () => {
         try{
+            setLoading(true)
             let res = await registerUser(authForm)
             if(res.status === 201) {
                 customToast.success('user created successfully. you can logging now');
@@ -53,7 +56,9 @@ const Home = props => {
                 })
                 history.replace('/create-game')
             }
+            setLoading(false)
         }catch(e) {
+            setLoading(false)
             customToast.error(staticMessages[e.data.error]);
         }
     }

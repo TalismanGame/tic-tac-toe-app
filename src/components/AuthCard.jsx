@@ -1,6 +1,6 @@
 import React from 'react'
 import { Form, Button } from 'react-bootstrap'
-
+import CustomButton from '../components/CustomButton'
 
 const AuthCard = ({title, formData, onChange, button, subRouters}) => {
     return (
@@ -13,9 +13,13 @@ const AuthCard = ({title, formData, onChange, button, subRouters}) => {
                         <Form.Control name={form.name} onChange={onChange} type={form.type} placeholder={form.placeholder} />
                     </Form.Group>
                 )}
-                <Button style={{marginTop: '20px'}} className='submitButton' onClick={button.onClick}>
-                    {button.text}
-                </Button>
+                <CustomButton 
+                    buttonStyle={{marginTop: '20px', width: '100%'}} 
+                    onClick={button.onClick}
+                    text={button.text}
+                    loading={button.loading}
+                    disabled={button.loading}
+                />
                 <div className='subRouterWrapper' onClick={subRouters.onClick}>
                     <span className='subRouterText'>{subRouters.text}</span>
                 </div>
