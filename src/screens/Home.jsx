@@ -11,7 +11,7 @@ import { useUserContext } from '../hooks/useUserContext'
 
 
 const Home = props => {
-    const history = useNavigate()
+    const navigate = useNavigate();
     const { localStorage } = window
     const user = useUserContext()
     // const reduxUser = useSelector(state => state.general)
@@ -39,7 +39,7 @@ const Home = props => {
                     isLoggedIn: true
                 })
                 localStorage.setItem('token', res.data.token)
-                history.replace('/create-game')
+                navigate("/create-game", { replace: true });
             }
             setLoading(false)
         }catch(e) {
@@ -59,7 +59,7 @@ const Home = props => {
                     isLoggedIn: true
                 })
                 localStorage.setItem('token', res.data.token)
-                history.replace('/create-game')
+                navigate("/create-game", { replace: true });
             }
             setLoading(false)
         }catch(e) {
