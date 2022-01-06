@@ -12,9 +12,10 @@ import { useUserContext } from '../hooks/useUserContext'
 
 const Home = props => {
     const history = useHistory()
+    const { localStorage } = window
     const user = useUserContext()
     // const reduxUser = useSelector(state => state.general)
-    
+
     const [authForm, updateAuthForm] = useState({
         username: '',
         password: '',
@@ -36,6 +37,7 @@ const Home = props => {
                 user.updateUserInfo({
                     ...res.data.user
                 })
+                localStorage.setItem('token', res.data.token)
                 history.replace('/create-game')
             }
             setLoading(false)
@@ -54,6 +56,7 @@ const Home = props => {
                 user.updateUserInfo({
                     ...res.data.user
                 })
+                localStorage.setItem('token', res.data.token)
                 history.replace('/create-game')
             }
             setLoading(false)
