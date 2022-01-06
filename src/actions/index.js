@@ -1,4 +1,7 @@
 
-// export const setToken = (token) => (dispatch, getState) => {
-  
-// }
+export const changeUserInfo = (payload) => (dispatch, getState) => {
+    dispatch({
+        type: 'CHANGE_USER',
+        payload
+    })
+}

@@ -3,7 +3,6 @@ import { Form, Button } from 'react-bootstrap'
 
 
 const AuthCard = ({title, formData, onChange, button, subRouters}) => {
-    
     return (
         <>
             <span className='title'>{title}</span>
