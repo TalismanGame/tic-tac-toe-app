@@ -15,7 +15,6 @@ const Home = props => {
     const user = useUserContext()
     // const reduxUser = useSelector(state => state.general)
     
-   
     const [authForm, updateAuthForm] = useState({
         username: '',
         password: '',
@@ -33,6 +32,9 @@ const Home = props => {
             let res = await loginUser(authForm)
             if(res.status === 200) {
                 customToast.success('loggin successfully done');
+                user.updateUserInfo({
+                    ...res.data.user
+                })
                 // history.replace('/create-game')
             }
             
@@ -47,6 +49,9 @@ const Home = props => {
             if(res.status === 201) {
                 customToast.success('user created successfully. you can logging now');
                 // history.replace('/create-game')
+                user.updateUserInfo({
+                    ...res.data.user
+                })
             }
         }catch(e) {
             customToast.error(staticMessages[e.data.error]);

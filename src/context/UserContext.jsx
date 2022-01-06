@@ -4,24 +4,26 @@ import React, { createContext, useState, useEffect } from "react";
 
 const UserContext = createContext();
 const UserContextProvider = ({ children }) => {
+  const { localStorage } = window
+  let myStoredUserInfo = localStorage.getItem('user')
+
   // the value that will be given to the context
-  const [user, setUser] = useState({
-    name: '',
-    age: 0
-  });
+  const [user, updateUser] = useState(JSON.parse(myStoredUserInfo));
+
+  const updateUserInfo = (data) => {
+    localStorage.setItem('user', JSON.stringify(data))
+    updateUser(data)
+  }
 
   // fetch a user from a fake backend API
-
-  useEffect(() => {
-    setUser({
-      name: 'Audrey',
-      age: 26
-    })
-  }, [])
-
   return (
     // the Provider gives access to the context to its children
-    <UserContext.Provider value={user}>
+    <UserContext.Provider 
+      value={{
+        userInfo: user, 
+        updateUserInfo
+      }}
+    >
       {children}
     </UserContext.Provider>
   );
