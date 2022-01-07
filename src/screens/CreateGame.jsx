@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
 import { useUserContext } from '../hooks/useUserContext'
-import { Images } from '../assets/images/'
+import boardInBackground from '../assets/images/board_background.png';
 
 const CreateGame = props => {
     const user = useUserContext()
@@ -24,8 +24,7 @@ export default CreateGame
 
 const Container = styled.div`
     height: 100vh;
-    background: url(${Images.boardAsABackground});
-    background-size: contain;
+    background-image: url(${boardInBackground});
     .section{
         height: 50vh;
         display: flex;
