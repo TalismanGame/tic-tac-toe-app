@@ -13,7 +13,7 @@ const CreateGame = props => {
                 <span>to ask him/her to join</span>
             </section>
             <section className='section'>
-                create
+                create sss
             </section>
         </Container>
     )
