@@ -6,7 +6,16 @@ import CustomButton from '../components/CustomButton'
 
 
 const CreateGame = props => {
+    const [gameCode, updateGameCode] = useState('')
 
+    const handleSubmitCode = () => {
+        console.log('code is:', gameCode);
+    }
+
+    const handleCreateNewCode = () => {
+        console.log('lets create new code');
+    }
+    
     return (
         <StyledContainer>
             <Row>
@@ -15,11 +24,11 @@ const CreateGame = props => {
                         <span className='sectionBigText'>Enter your friends code</span>
                         <span className='sectionMediumText'>To join the game</span>
                         <div className='formWrapper'>
-                            <StyledFormControl type="text" placeholder="Enter Code" />
+                            <StyledFormControl onChange={e => updateGameCode(e.target.value)} type="text" placeholder="Enter Code" />
                             <CustomButton 
                                 buttonStyle={{marginTop: '20px', width: '100%'}} 
-                                onClick={() => console.log('ss')}
-                                text={'Create a Code'}
+                                onClick={handleSubmitCode}
+                                text={'Join The Game'}
                             />
                         </div>
                     </section>
@@ -30,7 +39,7 @@ const CreateGame = props => {
                         <div className='formWrapper'>
                             <CustomButton 
                                 buttonStyle={{marginTop: '20px', width: '100%'}} 
-                                onClick={() => console.log('ss')}
+                                onClick={handleCreateNewCode}
                                 text={'Create a Code'}
                             />
                         </div>
