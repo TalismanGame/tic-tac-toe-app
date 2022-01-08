@@ -10,10 +10,10 @@ const CreateGame = props => {
             <Row>
                 <Col>
                 <section className='section'>
-                <span className='sectionBigText'>Enter your friends username</span>
+                <span className='sectionBigText'>Enter your friends code</span>
                 <span className='sectionMediumText'>To join the game</span>
                 <div className='formWrapper'>
-                    <StyledFormControl type="text" placeholder="Enter Username" />
+                    <StyledFormControl type="text" placeholder="Enter Code" />
                 </div>
             </section>
             <section className='section'>
