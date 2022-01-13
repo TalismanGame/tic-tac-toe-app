@@ -13,7 +13,7 @@ const CreateGame = props => {
     }
 
     const handleCreateNewCode = () => {
-        console.log('lets create new code');
+        console.log('call api to create a game and get you its ID');
     }
     
     return (

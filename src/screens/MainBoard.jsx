@@ -20,7 +20,7 @@ const MainBoard = props => {
             setUserNumber(userNumber => userNumber === 1 ?  2 : 1)
             tempArray[elementId].owner = uNumber
             if(uNumber === 1) playerOne.push(elementId)
-            else  playerTwo.push(elementId)
+            else playerTwo.push(elementId)
         } 
         else return
         setPlayerOneSquaresId(playerOne)
