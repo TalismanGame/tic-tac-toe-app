@@ -14,11 +14,11 @@ const fetchAPI = function ({ url, method, data, hasFile, forcedToken, version, c
             },
             ...config
         }
-        // const token = forcedToken || Cookies.get('token')
+        const token = window.localStorage.getItem('token')
 
-        // if (token) {
-        //     defaultConfig.headers.Authorization = 'Token ' + token
-        // }
+        if (token) {
+            defaultConfig.headers.Authorization = 'Token ' + token || ''
+        }
 
         if (hasFile) {
             const formData = new FormData()

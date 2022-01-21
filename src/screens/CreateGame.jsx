@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Form, Container, Row, Col } from 'react-bootstrap'
 import boardInBackground from '../assets/images/board_background.png';
 import CustomButton from '../components/CustomButton'
-
+import { createNewGame } from '../api/game'
 
 const CreateGame = props => {
     const [gameCode, updateGameCode] = useState('')
@@ -13,8 +13,13 @@ const CreateGame = props => {
         console.log('code is:', gameCode);
     }
 
-    const handleCreateNewCode = () => {
-        console.log('call api to create a game and get you its ID');
+    const handleCreateNewCode = async () => {
+        try{
+            let res = await createNewGame()
+            console.log('res', res);
+        }catch(error) {
+            console.log('error in creating game', error);
+        }
     }
     
     return (
