@@ -17,7 +17,7 @@ const CreateGame = props => {
 
     const handleCreateNewCode = async () => {
         if(inviteCode) {
-            console.log('inviteCode', inviteCode);
+            window.navigator.clipboard.writeText(inviteCode)
         }else {
             updateLoading(true)
             try{
@@ -59,7 +59,7 @@ const CreateGame = props => {
                                 disabled={loading}
                             />
                         </div>
-                        <div className='codeContainer'>
+                        <div className='codeContainer' onClick={() => window.navigator.clipboard.writeText(inviteCode)}>
                             {inviteCode &&
                                 <>
                                     <span className='codeTitle'>share the code with your friend</span>
