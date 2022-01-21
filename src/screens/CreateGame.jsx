@@ -7,6 +7,7 @@ import CustomButton from '../components/CustomButton'
 
 const CreateGame = props => {
     const [gameCode, updateGameCode] = useState('')
+    console.log(window.localStorage.getItem('token') );
 
     const handleSubmitCode = () => {
         console.log('code is:', gameCode);
