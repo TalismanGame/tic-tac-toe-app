@@ -7,18 +7,26 @@ import { createNewGame } from '../api/game'
 
 const CreateGame = props => {
     const [gameCode, updateGameCode] = useState('')
-    console.log(window.localStorage.getItem('token') );
+    const [inviteCode, updateInviteCode] = useState(false)
+    const [loading, updateLoading] = useState(false)
+    
 
     const handleSubmitCode = () => {
         console.log('code is:', gameCode);
     }
 
     const handleCreateNewCode = async () => {
-        try{
-            let res = await createNewGame()
-            console.log('res', res);
-        }catch(error) {
-            console.log('error in creating game', error);
+        if(inviteCode) {
+            console.log('inviteCode', inviteCode);
+        }else {
+            updateLoading(true)
+            try{
+                let res = await createNewGame()
+                if(res.status === 201) updateInviteCode(res.data.invite_code)
+            }catch(error) {
+                console.log('error in creating game', error);
+            }
+            updateLoading(false)
         }
     }
     
@@ -46,8 +54,20 @@ const CreateGame = props => {
                             <CustomButton 
                                 buttonStyle={{marginTop: '20px', width: '100%'}} 
                                 onClick={handleCreateNewCode}
-                                text={'Create a Code'}
+                                text={inviteCode ? 'share this code' : 'Create a Code'}
+                                loading={loading}
+                                disabled={loading}
                             />
+                        </div>
+                        <div className='codeContainer'>
+                            {inviteCode &&
+                                <>
+                                    <span className='codeTitle'>share the code with your friend</span>
+                                    <div className='codeBox'>
+                                        <span className='code'>{inviteCode}</span>
+                                    </div>
+                                </>
+                            }
                         </div>
                     </section>
                 </Col>
@@ -84,6 +104,33 @@ const StyledContainer = styled(Container)`
             padding: 7px;
             margin-top: 20px
         }
+        .codeContainer{
+            width: 100%;
+            height: 40px;
+            display: flex;
+            margin-top: 20px;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            .codeTitle{
+                font-size: 18px;
+                font-weight: 600;
+            }
+            .codeBox{
+                margin-top: 5px;
+                border: 1px solid #909090;
+                border-radius: 10px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 0px 30px;
+                .code{
+                    font-size: 20px;
+                    font-weight: 800;
+                }
+            }
+        }
+        
     }
 `
 const StyledFormControl = styled(Form.Control)`
