@@ -4,6 +4,8 @@ import { Form, Container, Row, Col } from 'react-bootstrap'
 import boardInBackground from '../assets/images/board_background.png';
 import CustomButton from '../components/CustomButton'
 import { createNewGame } from '../api/game'
+import customToast from '../utils/toast'
+
 
 const CreateGame = props => {
     const [gameCode, updateGameCode] = useState('')
@@ -18,6 +20,7 @@ const CreateGame = props => {
     const handleCreateNewCode = async () => {
         if(inviteCode) {
             window.navigator.clipboard.writeText(inviteCode)
+            customToast.success('copied!');
         }else {
             updateLoading(true)
             try{
@@ -63,7 +66,7 @@ const CreateGame = props => {
                             {inviteCode &&
                                 <>
                                     <span className='codeTitle'>share the code with your friend</span>
-                                    <div className='codeBox'>
+                                    <div className='codeBox' onClick={handleCreateNewCode}>
                                         <span className='code'>{inviteCode}</span>
                                     </div>
                                 </>
