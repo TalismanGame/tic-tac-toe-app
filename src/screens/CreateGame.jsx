@@ -77,7 +77,7 @@ const CreateGame = props => {
                             <CustomButton 
                                 buttonStyle={{marginTop: '20px', width: '100%'}} 
                                 onClick={handleCreateNewCode}
-                                text={generatedCode ? 'share this code' : 'Create a Code'}
+                                text={generatedCode ? 'Share this code' : 'Create a Code'}
                                 loading={loading}
                                 disabled={loading}
                             />
