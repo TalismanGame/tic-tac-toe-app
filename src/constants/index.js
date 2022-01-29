@@ -21,3 +21,12 @@ export const winnerConditions = [
     [0,4,8],
     [2,4,6]
 ]
+
+export const gameStatus = {
+    0: 'READY',
+    1: 'WAITING',
+    2: 'DELETE',
+    3: 'FINISHED'
+}
+
+
