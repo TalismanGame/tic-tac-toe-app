@@ -9,14 +9,14 @@ import { useGameContext } from '../hooks/useGameContext'
 
 
 const CreateGame = props => {
-    const game = useGameContext()
-    
-    const [inviteCode, setInviteCode] = useState('')
-    const [generatedCode, setGeneratedCode] = useState(undefined)
+    const gameObj = useGameContext()
+    const [inviteCode, setInviteCode] = useState(gameObj.game.inviteCode)
+    const [generatedCode, setGeneratedCode] = useState(gameObj.game.generatedCode)
     const [loading, updateLoading] = useState(false)
 
-    const handleSubmitCode = () => {
-        console.log('code is:', inviteCode);
+    const handleSubmitInviteCode = () => {
+        if(inviteCode) console.log('code is:', inviteCode)
+        else console.log('code is not entered!');
     }
 
     const handleCreateNewCode = async () => {
@@ -46,7 +46,7 @@ const CreateGame = props => {
                             <StyledFormControl onChange={e => setInviteCode(e.target.value)} type="text" placeholder="Enter Code" />
                             <CustomButton 
                                 buttonStyle={{marginTop: '20px', width: '100%'}} 
-                                onClick={handleSubmitCode}
+                                onClick={handleSubmitInviteCode}
                                 text={'Join The Game'}
                             />
                         </div>
