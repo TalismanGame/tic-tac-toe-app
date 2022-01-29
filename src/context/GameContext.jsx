@@ -4,7 +4,7 @@ import { gameStatus } from '../constants'
 const defaultGameDetails = {
     status: gameStatus[0],
     generatedCode: undefined,
-    inviteCode: undefined
+    inviteCode: ''
 }
 
 const GameContext = createContext();

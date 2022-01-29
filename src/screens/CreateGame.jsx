@@ -10,25 +10,24 @@ import { useGameContext } from '../hooks/useGameContext'
 
 const CreateGame = props => {
     const game = useGameContext()
-    console.log('game', game);
-    const [gameCode, updateGameCode] = useState('')
-    const [inviteCode, updateInviteCode] = useState(false)
-    const [loading, updateLoading] = useState(false)
     
+    const [inviteCode, setInviteCode] = useState('')
+    const [generatedCode, setGeneratedCode] = useState(undefined)
+    const [loading, updateLoading] = useState(false)
 
     const handleSubmitCode = () => {
-        console.log('code is:', gameCode);
+        console.log('code is:', inviteCode);
     }
 
     const handleCreateNewCode = async () => {
-        if(inviteCode) {
-            window.navigator.clipboard.writeText(inviteCode)
+        if(generatedCode) {
+            window.navigator.clipboard.writeText(generatedCode)
             customToast.success('copied!');
         }else {
             updateLoading(true)
             try{
                 let res = await createNewGame()
-                if(res.status === 201) updateInviteCode(res.data.invite_code)
+                if(res.status === 201) setGeneratedCode(res.data.invite_code)
             }catch(error) {
                 console.log('error in creating game', error);
             }
@@ -44,7 +43,7 @@ const CreateGame = props => {
                         <span className='sectionBigText'>Enter your friends code</span>
                         <span className='sectionMediumText'>To join the game</span>
                         <div className='formWrapper'>
-                            <StyledFormControl onChange={e => updateGameCode(e.target.value)} type="text" placeholder="Enter Code" />
+                            <StyledFormControl onChange={e => setInviteCode(e.target.value)} type="text" placeholder="Enter Code" />
                             <CustomButton 
                                 buttonStyle={{marginTop: '20px', width: '100%'}} 
                                 onClick={handleSubmitCode}
@@ -60,17 +59,17 @@ const CreateGame = props => {
                             <CustomButton 
                                 buttonStyle={{marginTop: '20px', width: '100%'}} 
                                 onClick={handleCreateNewCode}
-                                text={inviteCode ? 'share this code' : 'Create a Code'}
+                                text={generatedCode ? 'share this code' : 'Create a Code'}
                                 loading={loading}
                                 disabled={loading}
                             />
                         </div>
-                        <div className='codeContainer' onClick={() => window.navigator.clipboard.writeText(inviteCode)}>
-                            {inviteCode &&
+                        <div className='codeContainer' onClick={() => window.navigator.clipboard.writeText(generatedCode)}>
+                            {generatedCode &&
                                 <>
                                     <span className='codeTitle'>share the code with your friend</span>
                                     <div className='codeBox' onClick={handleCreateNewCode}>
-                                        <span className='code'>{inviteCode}</span>
+                                        <span className='code'>{generatedCode}</span>
                                     </div>
                                 </>
                             }
