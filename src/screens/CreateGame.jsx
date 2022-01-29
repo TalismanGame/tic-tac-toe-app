@@ -5,9 +5,12 @@ import boardInBackground from '../assets/images/board_background.png';
 import CustomButton from '../components/CustomButton'
 import { createNewGame } from '../api/game'
 import customToast from '../utils/toast'
+import { useGameContext } from '../hooks/useGameContext'
 
 
 const CreateGame = props => {
+    const game = useGameContext()
+    console.log('game', game);
     const [gameCode, updateGameCode] = useState('')
     const [inviteCode, updateInviteCode] = useState(false)
     const [loading, updateLoading] = useState(false)

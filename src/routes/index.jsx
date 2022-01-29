@@ -9,6 +9,7 @@ import MainBoard from '../screens/MainBoard'
 import Home from '../screens/Home'
 import CreateGame from '../screens/CreateGame'
 import NotFoundPage from '../screens/NotFoundPage'
+import { GameContextProvider } from "../context/UserContext";
 
 const CustomRouter = props => {
   

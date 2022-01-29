@@ -3,6 +3,8 @@ import { gameStatus } from '../constants'
 
 const defaultGameDetails = {
     status: gameStatus[0],
+    generatedCode: undefined,
+    inviteCode: undefined
 }
 
 const GameContext = createContext();
@@ -11,22 +13,22 @@ const GameContextProvider = ({children}) => {
     const { localStorage } = window
     let myStoredGameInfo = localStorage.getItem('game')
 
-    const [game, updateGame] = useState(myStoredGameInfo ? JSON.parse(myStoredGameInfo) : defaultGameDetails)
+    const [game, setGame] = useState(myStoredGameInfo ? JSON.parse(myStoredGameInfo) : defaultGameDetails)
 
-    const updateGameInfo = (data) => {
+    const updateGame = (data) => {
         localStorage.setItem('game', JSON.stringify(data))
         updateGame(data)
     }
 
     return (
-        <UserContext.Provider 
-        value={{
-            userInfo: user, 
-            updateUserInfo
-        }}
+        <GameContext.Provider 
+            value={{
+                game, 
+                updateGame
+            }}
         >
             {children}
-        </UserContext.Provider>
+        </GameContext.Provider>
     )
 }
 

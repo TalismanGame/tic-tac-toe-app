@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import CustomRouter from './routes'
 import { UserContextProvider } from "./context/UserContext";
+import { GameContextProvider } from "./context/GameContext";
 
 function App() {
   // const dispatch = useDispatch()
@@ -31,8 +32,11 @@ function App() {
         draggable
         pauseOnHover
       />
+      
       <UserContextProvider>
-        <CustomRouter />
+        <GameContextProvider>
+          <CustomRouter />
+        </GameContextProvider>
       </UserContextProvider>
     </>
   )
