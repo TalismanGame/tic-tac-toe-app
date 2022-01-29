@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Form, Container, Row, Col } from 'react-bootstrap'
 import boardInBackground from '../assets/images/board_background.png';
@@ -6,6 +6,7 @@ import CustomButton from '../components/CustomButton'
 import { createNewGame } from '../api/game'
 import customToast from '../utils/toast'
 import { useGameContext } from '../hooks/useGameContext'
+import { gameStatus } from '../constants'
 
 
 const CreateGame = props => {
@@ -15,7 +16,7 @@ const CreateGame = props => {
     const [loading, updateLoading] = useState(false)
 
     const handleSubmitInviteCode = () => {
-        if(inviteCode) console.log('code is:', inviteCode)
+        if(inviteCode) console.log('code is:', inviteCode, 'and lest check the game state and start it!')
         else console.log('code is not entered!');
     }
 
@@ -27,14 +28,31 @@ const CreateGame = props => {
             updateLoading(true)
             try{
                 let res = await createNewGame()
-                if(res.status === 201) setGeneratedCode(res.data.invite_code)
+                if(res.status === 201) {
+                    setGeneratedCode(res.data.invite_code)
+                    gameObj.updateGame({
+                        status: gameStatus[1],
+                        generatedCode: res.data.invite_code,
+                        ...gameObj.game
+                    })
+                }
             }catch(error) {
                 console.log('error in creating game', error);
             }
             updateLoading(false)
         }
     }
-    
+
+    // ********** use this to purge game state ************
+    // useEffect(() => {
+    //     gameObj.updateGame({
+    //         status: gameStatus[0],
+    //         generatedCode: undefined,
+    //         inviteCode: ''
+    //     })
+    // }, [])
+    // ********** use this to purge game state ************
+
     return (
         <StyledContainer>
             <Row>

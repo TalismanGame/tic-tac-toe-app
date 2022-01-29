@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useState, useEffect } from 'react'
 import { gameStatus } from '../constants'
 
 const defaultGameDetails = {
@@ -17,7 +17,7 @@ const GameContextProvider = ({children}) => {
 
     const updateGame = (data) => {
         localStorage.setItem('game', JSON.stringify(data))
-        updateGame(data)
+        setGame(data)
     }
 
     return (
