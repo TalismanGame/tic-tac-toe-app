@@ -43,7 +43,7 @@ const CreateGame = props => {
         }
     }
 
-    // ********** use this to purge game state ************
+    // ********** use this to purge game state and update the context ************
     // useEffect(() => {
     //     gameObj.updateGame({
     //         status: gameStatus[0],
@@ -51,7 +51,7 @@ const CreateGame = props => {
     //         inviteCode: ''
     //     })
     // }, [])
-    // ********** use this to purge game state ************
+    // ********** use this to purge game state and update the context ************
 
     return (
         <StyledContainer>
