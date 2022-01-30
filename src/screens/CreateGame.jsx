@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Form, Container, Row, Col } from 'react-bootstrap'
 import boardInBackground from '../assets/images/board_background.png';
@@ -11,8 +11,9 @@ import { gameStatus } from '../constants'
 
 const CreateGame = props => {
     const gameObj = useGameContext()
+    let generatedCode = gameObj.game.generatedCode
+    console.log('gameObj', gameObj);
     const [inviteCode, setInviteCode] = useState(gameObj.game.inviteCode)
-    const [generatedCode, setGeneratedCode] = useState(gameObj.game.generatedCode)
     const [loading, updateLoading] = useState(false)
 
     const handleSubmitInviteCode = () => {
@@ -29,7 +30,6 @@ const CreateGame = props => {
             try{
                 let res = await createNewGame()
                 if(res.status === 201) {
-                    setGeneratedCode(res.data.invite_code)
                     gameObj.updateGame({
                         status: gameStatus[1],
                         generatedCode: res.data.invite_code,
@@ -45,6 +45,7 @@ const CreateGame = props => {
 
     // ********** use this to purge game state and update the context ************
     // useEffect(() => {
+    //     window.localStorage.removeItem('game')
     //     gameObj.updateGame({
     //         status: gameStatus[0],
     //         generatedCode: undefined,

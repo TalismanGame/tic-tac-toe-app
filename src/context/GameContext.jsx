@@ -12,7 +12,6 @@ const GameContext = createContext();
 const GameContextProvider = ({children}) => {
     const { localStorage } = window
     let myStoredGameInfo = localStorage.getItem('game')
-
     const [game, setGame] = useState(myStoredGameInfo ? JSON.parse(myStoredGameInfo) : defaultGameDetails)
 
     const updateGame = (data) => {
