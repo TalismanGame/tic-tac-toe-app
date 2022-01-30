@@ -1,5 +1,5 @@
 //This component is the one that will hold the logic for getting the value of the context (user) and giving it to the UserContext.Provider
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState } from "react";
 
 
 const defaultUserObj = {
