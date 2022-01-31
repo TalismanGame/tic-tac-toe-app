@@ -12,7 +12,6 @@ import { gameStatus } from '../constants'
 const CreateGame = props => {
     const gameObj = useGameContext()
     let generatedCode = gameObj.game.generatedCode
-    console.log('gameObj', gameObj);
     const [inviteCode, setInviteCode] = useState(gameObj.game.inviteCode)
     const [loading, updateLoading] = useState(false)
 
