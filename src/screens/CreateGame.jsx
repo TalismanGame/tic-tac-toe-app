@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Form, Container, Row, Col } from 'react-bootstrap'
 import boardInBackground from '../assets/images/board_background.png';
 import CustomButton from '../components/CustomButton'
-import { createNewGame } from '../api/game'
+import { createNewGame, joinToGame } from '../api/game'
 import customToast from '../utils/toast'
 import { useGameContext } from '../hooks/useGameContext'
 import { gameStatus } from '../constants'
@@ -15,7 +15,13 @@ const CreateGame = props => {
     const [inviteCode, setInviteCode] = useState(gameObj.game.inviteCode)
     const [loading, updateLoading] = useState(false)
 
-    const handleSubmitInviteCode = () => {
+    const handleSubmitInviteCode = async() => {
+        try{
+            let res = await joinToGame({inviteCode})
+            console.log('res', res);
+        }catch(error){
+            console.log('error in joining to game', error);
+        }
         if(inviteCode) console.log('code is:', inviteCode, 'and lest check the game state and start it!')
         else console.log('code is not entered!');
     }
