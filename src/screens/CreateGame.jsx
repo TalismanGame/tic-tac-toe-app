@@ -7,18 +7,26 @@ import { createNewGame, joinToGame } from '../api/game'
 import customToast from '../utils/toast'
 import { useGameContext } from '../hooks/useGameContext'
 import { gameStatus } from '../constants'
+import { useNavigate } from 'react-router-dom';
+
 
 
 const CreateGame = props => {
+    const navigate = useNavigate()
     const gameObj = useGameContext()
     let generatedCode = gameObj.game.generatedCode
+
     const [inviteCode, setInviteCode] = useState(gameObj.game.inviteCode)
     const [loading, updateLoading] = useState(false)
 
     const handleSubmitInviteCode = async() => {
         try{
             let res = await joinToGame({inviteCode})
-            console.log('res', res);
+            console.log('here');
+            if(res.status === 200) {
+                customToast.success('lets play !');
+                // navigate("/board", { replace: true });
+            } 
         }catch(error){
             console.log('error in joining to game', error);
         }
