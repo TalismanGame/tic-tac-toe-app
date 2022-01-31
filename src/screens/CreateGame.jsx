@@ -25,7 +25,7 @@ const CreateGame = props => {
             console.log('here');
             if(res.status === 200) {
                 customToast.success('lets play !');
-                // navigate("/board", { replace: true });
+                navigate("/board", { replace: true });
             } 
         }catch(error){
             console.log('error in joining to game', error);
