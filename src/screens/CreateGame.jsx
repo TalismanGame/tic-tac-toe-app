@@ -29,11 +29,12 @@ const CreateGame = props => {
             try{
                 let res = await createNewGame()
                 if(res.status === 201) {
-                    gameObj.updateGame({
+                    const gameDetails = {
                         status: gameStatus[1],
                         generatedCode: res.data.invite_code,
                         ...gameObj.game
-                    })
+                    }
+                    gameObj.updateGame(gameDetails)
                 }
             }catch(error) {
                 console.log('error in creating game', error);
