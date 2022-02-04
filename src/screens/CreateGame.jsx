@@ -49,6 +49,7 @@ const CreateGame = props => {
                         ...gameObj.game
                     }
                     gameObj.updateGame(gameDetails)
+                    //call a interval to call API and get game state and if its started redirect to game
                 }
             }catch(error) {
                 console.log('error in creating game', error);
