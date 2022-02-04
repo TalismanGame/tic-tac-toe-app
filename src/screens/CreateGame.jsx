@@ -45,7 +45,7 @@ const CreateGame = props => {
                 let res = await createNewGame()
                 if(res.status === 201) {
                     const gameDetails = {
-                        status: gameStatus[1],
+                        status: gameStatus[0],
                         generatedCode: res.data.invite_code,
                         ...gameObj.game
                     }
@@ -66,7 +66,7 @@ const CreateGame = props => {
     // useEffect(() => {
     //     window.localStorage.removeItem('game')
     //     gameObj.updateGame({
-    //         status: gameStatus[0],
+    //         status: null,
     //         generatedCode: undefined,
     //         inviteCode: ''
     //     })

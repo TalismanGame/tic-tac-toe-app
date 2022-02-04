@@ -23,12 +23,8 @@ export const winnerConditions = [
 ]
 
 export const gameStatus = {
-    0: 'NOT_CREATED',
-    1: 'WAITING',
-    2: 'READY',
-    3: 'DELETE',
-    4: 'FINISHED'
+    0: 'WAITING',
+    1: 'READY',
+    2: 'DELETED',
+    3: 'FINISHED',
 }
-
-
-

@@ -1,8 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react'
-import { gameStatus } from '../constants'
 
 const defaultGameDetails = {
-    status: gameStatus[0],
+    status: null,
     generatedCode: undefined,
     inviteCode: ''
 }
