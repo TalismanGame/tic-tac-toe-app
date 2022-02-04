@@ -18,8 +18,7 @@ const CreateGame = props => {
 
     const [inviteCode, setInviteCode] = useState(gameObj.game.inviteCode)
     const [loading, updateLoading] = useState(false)
-    const [a, updateA] = useState(0)
-    console.log('aaaa', a);
+    
     const handleSubmitInviteCode = async() => {
         try{
             let res = await joinToGame({inviteCode})
@@ -60,7 +59,9 @@ const CreateGame = props => {
         }
     }
 
-    const getGameState = () => updateA(a => a + 1);
+    const getGameState = () => {
+        console.log('update game state');
+    }
 
     // ********** use this to purge game state and update the context ************
     // useEffect(() => {
