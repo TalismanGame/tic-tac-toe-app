@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Form, Container, Row, Col } from 'react-bootstrap'
 import boardInBackground from '../assets/images/board_background.png';
 import CustomButton from '../components/CustomButton'
-import { createNewGame, joinToGame } from '../api/game'
+import { createNewGame, joinToGame, getGameStatus } from '../api/game'
 import customToast from '../utils/toast'
 import { useGameContext } from '../hooks/useGameContext'
 import { gameStatus } from '../constants'
@@ -50,7 +50,7 @@ const CreateGame = props => {
                     }
                     gameObj.updateGame(gameDetails)
                     //call a interval to call API and get game state and if its started redirect to game
-                    getGameStateInterval = setInterval(() => getGameState(), 1000)
+                    getGameStateInterval = setInterval(() => getGameState(res.data.invite_code), 1000)
                 }
             }catch(error) {
                 console.log('error in creating game', error);
@@ -59,8 +59,13 @@ const CreateGame = props => {
         }
     }
 
-    const getGameState = () => {
-        console.log('update game state');
+    const getGameState = async (code) => {
+        let res = await getGameStatus(code) 
+        if(res.status === 200){
+            if(res.data.status === 1) {
+                console.log('redirect user to the board and game will start');
+            }
+        }
     }
 
     // ********** use this to purge game state and update the context ************

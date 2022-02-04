@@ -8,4 +8,8 @@ export const joinToGame = async inviteCode => {
     return await fetchAPI({ url: '/game/join', method: 'PUT', data: inviteCode })
 }
 
+export const getGameStatus = async inviteCode => {
+    return await fetchAPI({url: `/game/status/${inviteCode}/`})
+}
+
 
