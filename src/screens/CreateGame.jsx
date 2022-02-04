@@ -10,7 +10,7 @@ import { gameStatus } from '../constants'
 import { useNavigate } from 'react-router-dom';
 
 
-
+let getGameStateInterval;
 const CreateGame = props => {
     const navigate = useNavigate()
     const gameObj = useGameContext()
@@ -18,7 +18,8 @@ const CreateGame = props => {
 
     const [inviteCode, setInviteCode] = useState(gameObj.game.inviteCode)
     const [loading, updateLoading] = useState(false)
-
+    const [a, updateA] = useState(0)
+    console.log('aaaa', a);
     const handleSubmitInviteCode = async() => {
         try{
             let res = await joinToGame({inviteCode})
@@ -50,6 +51,7 @@ const CreateGame = props => {
                     }
                     gameObj.updateGame(gameDetails)
                     //call a interval to call API and get game state and if its started redirect to game
+                    getGameStateInterval = setInterval(() => getGameState(), 1000)
                 }
             }catch(error) {
                 console.log('error in creating game', error);
@@ -57,6 +59,8 @@ const CreateGame = props => {
             updateLoading(false)
         }
     }
+
+    const getGameState = () => updateA(a => a + 1);
 
     // ********** use this to purge game state and update the context ************
     // useEffect(() => {
@@ -68,6 +72,8 @@ const CreateGame = props => {
     //     })
     // }, [])
     // ********** use this to purge game state and update the context ************
+
+    useEffect(() => () => clearInterval(getGameStateInterval), [])
 
     return (
         <StyledContainer>
