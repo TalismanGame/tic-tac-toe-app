@@ -7,12 +7,13 @@ import { createNewGame, joinToGame, getGameStatus } from '../api/game'
 import customToast from '../utils/toast'
 import { useGameContext } from '../hooks/useGameContext'
 import { gameStatus } from '../constants'
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 
 let getGameStateInterval;
 const WaitingRoom = props => {
     const location = useLocation()
+    const navigate = useNavigate()
     const { inviteCode } = location.state
 
     const saveCodeToClipboard = () => {
@@ -23,10 +24,8 @@ const WaitingRoom = props => {
     const getGameState = async (code) => {
         let res = await getGameStatus(code) 
         if(res.status === 200){
-            console.log('res', res.data.status);
-            if(res.data.status === 1) {
-                console.log('redirect user to the board and game will start');
-            }
+            // redirect user to the board and game will start
+            if( +res.data.status === 1 ) navigate("/board", { replace: true });
         }
     }
 
