@@ -51,7 +51,7 @@ const CreateGame = props => {
                     }
                     gameObj.updateGame(gameDetails)
                     setGeneratedCode(res.data.invite_code)
-                    navigate("/waiting-room", { generatedCode: res.data.invite_code });
+                    navigate("/waiting-room", { state: {inviteCode: res.data.invite_code}});
                     //call a interval to call API and get game state and if its started redirect to game
                     // getGameStateInterval = setInterval(() => getGameState(res.data.invite_code), 1000)
                 }

@@ -7,9 +7,16 @@ import { createNewGame, joinToGame, getGameStatus } from '../api/game'
 import customToast from '../utils/toast'
 import { useGameContext } from '../hooks/useGameContext'
 import { gameStatus } from '../constants'
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const WaitingRoom = props => {
+    const location = useLocation()
+    const { inviteCode } = location.state
+
+    const saveCodeToClipboard = () => {
+        window.navigator.clipboard.writeText(inviteCode)
+        customToast.success('code copied!');
+    }
 
     return (
         <StyledContainer>
@@ -20,10 +27,19 @@ const WaitingRoom = props => {
                         <span className='sectionMediumText'>To join the game</span>
                         <div className='codeBoxWrapper'>
                             <span className='code'>
-                                {'code'}
+                                {inviteCode}
                             </span>
                         </div>
+                        <CustomButton 
+                            textStyle={{fontSize:'16px', fontWeight: '600'}}   
+                            buttonStyle={{marginTop: '20px', width: '90%'}} 
+                            onClick={saveCodeToClipboard}
+                            text={'save to clipboard'}
+                            loading={false}
+                            disabled={false}
+                        />
                     </section>
+                    
                 </Col>
             </Row>
         </StyledContainer>
