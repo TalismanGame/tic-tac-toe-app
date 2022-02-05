@@ -15,13 +15,11 @@ const CreateGame = props => {
     const gameObj = useGameContext()
 
     const [inviteCode, setInviteCode] = useState('')
-    const [generatedCode, setGeneratedCode] = useState(gameObj.game.generatedCode)
     const [loading, updateLoading] = useState(false)
     
     const handleSubmitInviteCode = async() => {
         try{
             let res = await joinToGame({inviteCode})
-            console.log('here');
             if(res.status === 200) {
                 customToast.success('lets play !');
                 navigate("/board", { replace: true });
@@ -44,7 +42,6 @@ const CreateGame = props => {
                     ...gameObj.game
                 }
                 gameObj.updateGame(gameDetails)
-                setGeneratedCode(res.data.invite_code)
                 navigate("/waiting-room", { state: {inviteCode: res.data.invite_code}});
             }
         }catch(error) {
@@ -95,16 +92,6 @@ const CreateGame = props => {
                                 disabled={loading}
                             />
                         </div>
-                        {/* <div className='codeContainer' onClick={() => window.navigator.clipboard.writeText(generatedCode)}>
-                            {generatedCode &&
-                                <>
-                                    <span className='codeTitle'>share the code with your friend</span>
-                                    <div className='codeBox' onClick={handleCreateNewCode}>
-                                        <span className='code'>{generatedCode}</span>
-                                    </div>
-                                </>
-                            }
-                        </div> */}
                     </section>
                 </Col>
             </Row>
