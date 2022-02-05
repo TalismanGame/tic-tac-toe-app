@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Form, Container, Row, Col } from 'react-bootstrap'
 import boardInBackground from '../assets/images/board_background.png';
 import CustomButton from '../components/CustomButton'
-import { createNewGame, joinToGame, getGameStatus } from '../api/game'
+import { createNewGame, joinToGame } from '../api/game'
 import customToast from '../utils/toast'
 import { useGameContext } from '../hooks/useGameContext'
 import { gameStatus } from '../constants'
