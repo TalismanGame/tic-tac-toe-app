@@ -10,13 +10,14 @@ import { gameStatus } from '../constants'
 import { useNavigate } from 'react-router-dom';
 
 
-let getGameStateInterval;
+// let getGameStateInterval;
 const CreateGame = props => {
     const navigate = useNavigate()
     const gameObj = useGameContext()
-    let generatedCode = gameObj.game.generatedCode
+    // let generatedCode = gameObj.game.generatedCode
 
-    const [inviteCode, setInviteCode] = useState(gameObj.game.inviteCode)
+    const [inviteCode, setInviteCode] = useState('')
+    const [generatedCode, setGeneratedCode] = useState(gameObj.game.generatedCode)
     const [loading, updateLoading] = useState(false)
     
     const handleSubmitInviteCode = async() => {
@@ -35,10 +36,10 @@ const CreateGame = props => {
     }
 
     const handleCreateNewCode = async () => {
-        if(generatedCode) {
-            window.navigator.clipboard.writeText(generatedCode)
-            customToast.success('copied!');
-        }else {
+        // if(generatedCode) {
+        //     window.navigator.clipboard.writeText(generatedCode)
+        //     customToast.success('copied!');
+        // }else {
             updateLoading(true)
             try{
                 let res = await createNewGame()
@@ -49,14 +50,16 @@ const CreateGame = props => {
                         ...gameObj.game
                     }
                     gameObj.updateGame(gameDetails)
+                    setGeneratedCode(res.data.invite_code)
+                    navigate("/waiting-room", { generatedCode: res.data.invite_code });
                     //call a interval to call API and get game state and if its started redirect to game
-                    getGameStateInterval = setInterval(() => getGameState(res.data.invite_code), 1000)
+                    // getGameStateInterval = setInterval(() => getGameState(res.data.invite_code), 1000)
                 }
             }catch(error) {
                 console.log('error in creating game', error);
             }
             updateLoading(false)
-        }
+        // }
     }
 
     const getGameState = async (code) => {
@@ -79,7 +82,7 @@ const CreateGame = props => {
     // }, [])
     // ********** use this to purge game state and update the context ************
 
-    useEffect(() => () => clearInterval(getGameStateInterval), [])
+    // useEffect(() => () => clearInterval(getGameStateInterval), [])
 
     return (
         <StyledContainer>
@@ -105,12 +108,12 @@ const CreateGame = props => {
                             <CustomButton 
                                 buttonStyle={{marginTop: '20px', width: '100%'}} 
                                 onClick={handleCreateNewCode}
-                                text={generatedCode ? 'Share this code' : 'Create a Code'}
+                                text={'Create a Code'}
                                 loading={loading}
                                 disabled={loading}
                             />
                         </div>
-                        <div className='codeContainer' onClick={() => window.navigator.clipboard.writeText(generatedCode)}>
+                        {/* <div className='codeContainer' onClick={() => window.navigator.clipboard.writeText(generatedCode)}>
                             {generatedCode &&
                                 <>
                                     <span className='codeTitle'>share the code with your friend</span>
@@ -119,7 +122,7 @@ const CreateGame = props => {
                                     </div>
                                 </>
                             }
-                        </div>
+                        </div> */}
                     </section>
                 </Col>
             </Row>

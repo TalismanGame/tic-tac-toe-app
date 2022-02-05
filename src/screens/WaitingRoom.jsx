@@ -9,7 +9,8 @@ import { useGameContext } from '../hooks/useGameContext'
 import { gameStatus } from '../constants'
 import { useNavigate } from 'react-router-dom';
 
-const WaitingRoom = () => {
+const WaitingRoom = props => {
+
     return (
         <StyledContainer>
             <Row>
@@ -17,8 +18,10 @@ const WaitingRoom = () => {
                     <section className='section'>
                         <span className='sectionBigText'>share the code with your friend</span>
                         <span className='sectionMediumText'>To join the game</span>
-                        <div>
-                            
+                        <div className='codeBoxWrapper'>
+                            <span className='code'>
+                                {'code'}
+                            </span>
                         </div>
                     </section>
                 </Col>
@@ -45,6 +48,22 @@ const StyledContainer = styled(Container)`
         .sectionMediumText{
             font-size: 18px;
             font-weight: 700
+        }
+        .codeBoxWrapper{
+            margin-top: 20px;
+            width: 90%;
+            height: 50px;
+            border: 2px solid #909090;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0px 30px;
+            .code{
+                font-size: 20px;
+                font-weight: 800;
+            }
+            
         }
     }
 `
