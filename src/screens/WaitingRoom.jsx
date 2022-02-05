@@ -9,6 +9,8 @@ import { useGameContext } from '../hooks/useGameContext'
 import { gameStatus } from '../constants'
 import { useLocation } from 'react-router-dom';
 
+
+let getGameStateInterval;
 const WaitingRoom = props => {
     const location = useLocation()
     const { inviteCode } = location.state
@@ -17,6 +19,24 @@ const WaitingRoom = props => {
         window.navigator.clipboard.writeText(inviteCode)
         customToast.success('code copied!');
     }
+
+    const getGameState = async (code) => {
+        let res = await getGameStatus(code) 
+        if(res.status === 200){
+            console.log('res', res.data.status);
+            if(res.data.status === 1) {
+                console.log('redirect user to the board and game will start');
+            }
+        }
+    }
+
+    useEffect(() => {
+        //call a interval to call API and get game state and if its started redirect to game
+        getGameStateInterval = setInterval(() => getGameState(inviteCode), 1000)
+        return () => {
+            clearInterval(getGameStateInterval)
+        }
+    }, [])
 
     return (
         <StyledContainer>

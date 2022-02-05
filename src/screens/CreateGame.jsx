@@ -10,11 +10,9 @@ import { gameStatus } from '../constants'
 import { useNavigate } from 'react-router-dom';
 
 
-// let getGameStateInterval;
 const CreateGame = props => {
     const navigate = useNavigate()
     const gameObj = useGameContext()
-    // let generatedCode = gameObj.game.generatedCode
 
     const [inviteCode, setInviteCode] = useState('')
     const [generatedCode, setGeneratedCode] = useState(gameObj.game.generatedCode)
@@ -36,40 +34,26 @@ const CreateGame = props => {
     }
 
     const handleCreateNewCode = async () => {
-        // if(generatedCode) {
-        //     window.navigator.clipboard.writeText(generatedCode)
-        //     customToast.success('copied!');
-        // }else {
-            updateLoading(true)
-            try{
-                let res = await createNewGame()
-                if(res.status === 201) {
-                    const gameDetails = {
-                        status: gameStatus[0],
-                        generatedCode: res.data.invite_code,
-                        ...gameObj.game
-                    }
-                    gameObj.updateGame(gameDetails)
-                    setGeneratedCode(res.data.invite_code)
-                    navigate("/waiting-room", { state: {inviteCode: res.data.invite_code}});
-                    //call a interval to call API and get game state and if its started redirect to game
-                    // getGameStateInterval = setInterval(() => getGameState(res.data.invite_code), 1000)
+        updateLoading(true)
+        try{
+            let res = await createNewGame()
+            if(res.status === 201) {
+                const gameDetails = {
+                    status: gameStatus[0],
+                    generatedCode: res.data.invite_code,
+                    ...gameObj.game
                 }
-            }catch(error) {
-                console.log('error in creating game', error);
+                gameObj.updateGame(gameDetails)
+                setGeneratedCode(res.data.invite_code)
+                navigate("/waiting-room", { state: {inviteCode: res.data.invite_code}});
             }
-            updateLoading(false)
-        // }
+        }catch(error) {
+            console.log('error in creating game', error);
+        }
+        updateLoading(false)
     }
 
-    const getGameState = async (code) => {
-        let res = await getGameStatus(code) 
-        if(res.status === 200){
-            if(res.data.status === 1) {
-                console.log('redirect user to the board and game will start');
-            }
-        }
-    }
+
 
     // ********** use this to purge game state and update the context ************
     // useEffect(() => {
@@ -81,8 +65,6 @@ const CreateGame = props => {
     //     })
     // }, [])
     // ********** use this to purge game state and update the context ************
-
-    // useEffect(() => () => clearInterval(getGameStateInterval), [])
 
     return (
         <StyledContainer>
