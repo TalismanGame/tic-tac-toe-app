@@ -8,6 +8,7 @@ import {
 import MainBoard from '../screens/MainBoard'
 import Home from '../screens/Home'
 import CreateGame from '../screens/CreateGame'
+import WaitingRoom from '../screens/WaitingRoom'
 import NotFoundPage from '../screens/NotFoundPage'
 import { GameContextProvider } from "../context/UserContext";
 
@@ -24,6 +25,10 @@ const CustomRouter = props => {
         element={<CreateGame />}
       />
       <Route 
+        path="/waiting-room/" 
+        element={<WaitingRoom />}
+      />
+      <Route 
         path="/board/*" 
         element={<MainBoard />}
       />
@@ -31,6 +36,7 @@ const CustomRouter = props => {
         path="/404" 
         element={<NotFoundPage />}
       />
+      
     </Routes>
   )
 }
