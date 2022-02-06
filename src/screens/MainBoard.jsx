@@ -1,9 +1,14 @@
-import React, {useState} from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { elements, winnerConditions } from '../constants'
+import { getGameDataApi } from '../api/game'
+import { useLocation, useNavigate } from 'react-router-dom';
 
 
+let getGameDataInterval;
 const MainBoard = props => {
+    const location = useLocation()
+    const { inviteCode } = location.state
     const [userNumber, setUserNumber] = useState(1)
     const [winner, setWinner] = useState({status: false, id: null})
     const [squares, setSquares] = useState(JSON.parse(JSON.stringify(elements)))
@@ -63,6 +68,21 @@ const MainBoard = props => {
                 return null
         }
     }
+
+    const getGameData = async (code) => {
+        let res = await getGameDataApi(code) 
+        if(res.status === 200){
+            // console.log('res', res);
+        }
+    }
+    console.log('inviteCode', inviteCode);
+    useEffect(() => {
+        //call a interval to call API and get game data to simulate a game live
+        getGameDataInterval = setInterval(() => getGameData(inviteCode), 1000)
+        return () => {
+            clearInterval(getGameDataInterval)
+        }
+    }, [])
 
     return (
         <Container>

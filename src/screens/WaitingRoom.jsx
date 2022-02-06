@@ -23,7 +23,7 @@ const WaitingRoom = props => {
         let res = await getGameStatus(code) 
         if(res.status === 200){
             // redirect user to the board and game will start
-            if( +res.data.status === 1 ) navigate("/board", { replace: true });
+            if( +res.data.status === 1 ) navigate("/board", { replace: true, state: {inviteCode} });
         }
     }
 

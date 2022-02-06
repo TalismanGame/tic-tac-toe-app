@@ -28,7 +28,7 @@ const CreateGame = props => {
             let res = await joinToGame({inviteCode})
             if(res.status === 200) {
                 customToast.success('lets play !');
-                navigate("/board", { replace: true });
+                navigate("/board", { replace: true, state: {inviteCode}});
             } 
         }catch(error){
             setInviteCodeLoading(false)

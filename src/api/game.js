@@ -12,4 +12,8 @@ export const getGameStatus = async inviteCode => {
     return await fetchAPI({url: `/game/status/${inviteCode}/`})
 }
 
+export const getGameDataApi = async inviteCode => {
+    return await fetchAPI({url: `/game/data/${inviteCode}/`})
+}
+
 
