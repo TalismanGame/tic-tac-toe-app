@@ -45,13 +45,13 @@ const MainBoard = props => {
         setSquares(tempArray)
     }
 
-    const handleRefresh = () => {
-        setUserNumber(1)
-        setSquares(JSON.parse(JSON.stringify(elements)))
-        setWinner({status: false, id: null})
-        setPlayerOneSquaresId([])
-        setPlayerTwoSquaresId([])
-    }
+    // const handleRefresh = () => {
+    //     setUserNumber(1)
+    //     setSquares(JSON.parse(JSON.stringify(elements)))
+    //     setWinner({status: false, id: null})
+    //     setPlayerOneSquaresId([])
+    //     setPlayerTwoSquaresId([])
+    // }
 
     const renderMark = (owner) => {
         switch (owner) {
@@ -82,9 +82,9 @@ const MainBoard = props => {
                     </Square>
                 )}
             </BoardWrapper>
-            <RefreshButton onClick={handleRefresh}>
+            {/* <RefreshButton onClick={handleRefresh}>
                 <span>Refresh</span>
-            </RefreshButton>
+            </RefreshButton> */}
         </Container>
     )
 }
