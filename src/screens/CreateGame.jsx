@@ -15,20 +15,26 @@ const CreateGame = props => {
     const gameObj = useGameContext()
 
     const [inviteCode, setInviteCode] = useState('')
+    const [inviteCodeLoading, setInviteCodeLoading] = useState(false)
     const [loading, updateLoading] = useState(false)
     
     const handleSubmitInviteCode = async() => {
+        if(inviteCode === '') {
+            customToast.error('Enter the code first!');
+            return
+        } 
         try{
+            setInviteCodeLoading(true)
             let res = await joinToGame({inviteCode})
             if(res.status === 200) {
                 customToast.success('lets play !');
                 navigate("/board", { replace: true });
             } 
         }catch(error){
+            setInviteCodeLoading(false)
             console.log('error in joining to game', error);
+            if(error.status === 404) customToast.error('game not found!');
         }
-        if(inviteCode) console.log('code is:', inviteCode, 'and lest check the game state and start it!')
-        else console.log('code is not entered!');
     }
 
     const handleCreateNewCode = async () => {
@@ -76,6 +82,8 @@ const CreateGame = props => {
                                 buttonStyle={{marginTop: '20px', width: '100%'}} 
                                 onClick={handleSubmitInviteCode}
                                 text={'Join The Game'}
+                                loading={inviteCodeLoading}
+                                disabled={inviteCodeLoading}
                             />
                         </div>
                     </section>
