@@ -8,6 +8,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 let getGameDataInterval;
 const MainBoard = props => {
     const location = useLocation()
+    const navigate = useNavigate()
     const { inviteCode } = location.state
     const [userNumber, setUserNumber] = useState(1)
     const [winner, setWinner] = useState({status: false, id: null})
@@ -70,12 +71,19 @@ const MainBoard = props => {
     }
 
     const getGameData = async (code) => {
-        let res = await getGameDataApi(code) 
-        if(res.status === 200){
-            // console.log('res', res);
+        try{
+            let res = await getGameDataApi(code) 
+            if(res.status === 200){
+                console.log('res', res);
+            }
+        }catch(error){
+            if(error.status === 404) {
+                navigate("/create-game");
+            }
+            console.log(error);
         }
     }
-    console.log('inviteCode', inviteCode);
+
     useEffect(() => {
         //call a interval to call API and get game data to simulate a game live
         getGameDataInterval = setInterval(() => getGameData(inviteCode), 1000)
