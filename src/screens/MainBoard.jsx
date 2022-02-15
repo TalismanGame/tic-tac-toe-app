@@ -17,7 +17,7 @@ const MainBoard = props => {
         player_o: '',
         currentTurn: 0
     })
-    const [winner, setWinner] = useState({status: false, id: null})
+    const [winner, setWinner] = useState({status: false, id: 4, condition: []})
     const [squares, setSquares] = useState(elements.map(item => {return {...item}}))
     //or use this to create array of object unique => useState(JSON.parse(JSON.stringify(elements))) 
     const [playerOneSquaresId, setPlayerOneSquaresId] = useState([])
@@ -45,10 +45,19 @@ const MainBoard = props => {
     const checkWinner = async (playerOne, playerTwo, tempArray, nextPlayer) => {
         let winnerCondition = []
         let webServerBoard = tempArray.map(item => item.owner)
-        
+        let webServerWinner = 4
+
         winnerConditions.forEach(condition => {
-            if (condition.every(squareNum => playerOne.includes(squareNum))) {setWinner({status: true, id: 1, condition}); winnerCondition = condition}
-            if (condition.every(squareNum => playerTwo.includes(squareNum))) {setWinner({status: true, id: 2, condition}); winnerCondition = condition}
+            if (condition.every(squareNum => playerOne.includes(squareNum))) {
+                setWinner({status: true, id: 1, condition}) 
+                winnerCondition = condition
+                webServerWinner = 0
+            }
+            if (condition.every(squareNum => playerTwo.includes(squareNum))) {
+                setWinner({status: true, id: 2, condition})
+                winnerCondition = condition
+                webServerWinner = 1
+            }
             // The every() method tests whether all elements in the array pass the test implemented by the provided function. It returns a Boolean value.
         })
 
@@ -61,6 +70,7 @@ const MainBoard = props => {
             await updateGameData({
                 code: inviteCode, 
                 board: webServerBoard,
+                winner: webServerWinner,
                 nextPlayer
             })
         }catch(error){
@@ -76,13 +86,18 @@ const MainBoard = props => {
             const playerTwo = [...playerTwoSquaresId]
 
             let res = await getGameDataApi(code)
-             
             if(res.status === 200){
                 updatePlayers({
                     player_x: res.data.playerX,
                     player_o: res.data.playerO,
                     currentTurn: res.data.nextPlayer
                 })
+                if(res.data.winner !== 4) {
+                    setWinner(winner => ({
+                        ...winner,
+                        status: true, id: res.data.winner
+                    }))
+                }
                 tempArray.forEach(item => {
                     item.owner = res.data.gameBoard[item.id]
                     if(res.data.gameBoard[item.id] === 1) playerOne.push(item.id)
@@ -144,12 +159,21 @@ const MainBoard = props => {
         <Container>
             <div className='pageHeader'>
                 <Turn>
-                    <span>
-                    {players.currentTurn === 0 
-                        ?   players.player_x
-                        :   players.player_o
+                    {winner.status 
+                        ?   <span>
+                                Winner is:
+                                {winner.id === 0
+                                    ?   ' ' + players.player_x
+                                    :   ' ' + players.player_o
+                                }
+                            </span>
+                        :   <span>
+                                {players.currentTurn === 0 
+                                    ?   players.player_x
+                                    :   players.player_o
+                                }
+                            </span> 
                     }
-                    </span> 
                 </Turn>
             </div>
             <BoardWrapper>
