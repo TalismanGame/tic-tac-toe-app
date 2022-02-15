@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { elements, winnerConditions } from '../constants'
-import { getGameDataApi } from '../api/game'
+import { getGameDataApi, updateGameData } from '../api/game'
 import { useLocation, useNavigate } from 'react-router-dom';
 
 
@@ -19,6 +19,7 @@ const MainBoard = props => {
 
     const handleClickOnSquare = (elementId, uNumber) => {
         let tempArray = JSON.parse(JSON.stringify(squares))
+        
         const playerOne = [...playerOneSquaresId]
         const playerTwo = [...playerTwoSquaresId]
 
@@ -34,9 +35,10 @@ const MainBoard = props => {
         checkWinner(playerOne, playerTwo, tempArray)
     }
 
-    const checkWinner = (playerOne, playerTwo, tempArray) => {
+    const checkWinner = async (playerOne, playerTwo, tempArray) => {
         let winnerCondition = []
-
+        let webServerBoard = tempArray.map(item => item.owner)
+        
         winnerConditions.forEach(condition => {
             if (condition.every(squareNum => playerOne.includes(squareNum))) {setWinner({status: true, id: 1, condition}); winnerCondition = condition}
             if (condition.every(squareNum => playerTwo.includes(squareNum))) {setWinner({status: true, id: 2, condition}); winnerCondition = condition}
@@ -48,7 +50,13 @@ const MainBoard = props => {
                 square.isWinnerSquare = true
             }
         })
+        try{
+            let res = await updateGameData({code: inviteCode, board: webServerBoard})
+            console.log(res);
+        }catch(error){
 
+        }
+        
         setSquares(tempArray)
     }
 

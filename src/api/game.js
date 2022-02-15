@@ -16,4 +16,10 @@ export const getGameDataApi = async inviteCode => {
     return await fetchAPI({url: `/game/data/${inviteCode}/`})
 }
 
+export const updateGameData = async data => {
+    return await fetchAPI({url: `/game/update`, method: 'PUT', data})
+}
+
+
+
 
