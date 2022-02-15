@@ -4,12 +4,13 @@ import { elements, winnerConditions } from '../constants'
 import { getGameDataApi, updateGameData } from '../api/game'
 import { useLocation, useNavigate } from 'react-router-dom';
 import customToast from '../utils/toast'
-
+import { useUserContext } from '../hooks/useUserContext'
 
 let getGameDataInterval;
 const MainBoard = props => {
     const location = useLocation()
     const navigate = useNavigate()
+    const user = useUserContext()
     const { inviteCode } = location.state
     const [players, updatePlayers] = useState({
         player_x: '',
@@ -120,6 +121,17 @@ const MainBoard = props => {
         }
     }
 
+    const disableBoardFunction = () => {
+        let bool = true
+        if(winner.status) return false
+        if(user.userInfo.username === players.player_x) {
+            if(players.currentTurn !== 0) bool = false
+        }else{
+            if(players.currentTurn === 0) bool = false
+        }
+        return bool
+    }
+
     useEffect(() => {
         //call a interval to call API and get game data to simulate a game live
         getGameDataInterval = setInterval(() => getGameData(inviteCode), 1000)
@@ -145,7 +157,7 @@ const MainBoard = props => {
                     <Square 
                         key={el.id}
                         isWinnerSquare={el.isWinnerSquare}
-                        onClick={() => !winner.status && handleClickOnSquare(el.id, players.currentTurn === 0 ? 1 : 2)}
+                        onClick={() => disableBoardFunction() && handleClickOnSquare(el.id, players.currentTurn === 0 ? 1 : 2)}
                     >
                         <span>
                             {renderMark(el.owner)}
