@@ -11,7 +11,11 @@ const MainBoard = props => {
     const location = useLocation()
     const navigate = useNavigate()
     const { inviteCode } = location.state
-    const [userNumber, setUserNumber] = useState(1)
+    const [players, updatePlayers] = useState({
+        player_x: '',
+        player_o: '',
+        currentTurn: 0
+    })
     const [winner, setWinner] = useState({status: false, id: null})
     const [squares, setSquares] = useState(elements.map(item => {return {...item}}))
     //or use this to create array of object unique => useState(JSON.parse(JSON.stringify(elements))) 
@@ -24,8 +28,9 @@ const MainBoard = props => {
         const playerOne = [...playerOneSquaresId]
         const playerTwo = [...playerTwoSquaresId]
 
+        updatePlayers(players => ({...players, currentTurn: players.currentTurn === 0 ? 1 : 0}))
+
         if(tempArray[elementId].owner === 0) {
-            setUserNumber(userNumber => userNumber === 1 ?  2 : 1)
             tempArray[elementId].owner = uNumber
             if(uNumber === 1) playerOne.push(elementId)
             else playerTwo.push(elementId)
@@ -65,11 +70,16 @@ const MainBoard = props => {
             const playerOne = [...playerOneSquaresId]
             const playerTwo = [...playerTwoSquaresId]
 
-            let res = await getGameDataApi(code) 
+            let res = await getGameDataApi(code)
+             
             if(res.status === 200){
+                updatePlayers({
+                    player_x: res.data.playerX,
+                    player_o: res.data.playerO,
+                    currentTurn: res.data.nextPlayer
+                })
                 tempArray.forEach(item => {
                     item.owner = res.data.gameBoard[item.id]
-                    // id: 0, owner: 0, isWinnerSquare: false
                     if(res.data.gameBoard[item.id] === 1) playerOne.push(item.id)
                     else if(res.data.gameBoard[item.id] === 2) playerTwo.push(item.id)
                     else return
@@ -117,14 +127,14 @@ const MainBoard = props => {
     return (
         <Container>
             <div className='pageHeader'>
-                <Turn>user number: <span>{userNumber}</span></Turn>
+                {/* <Turn>{playerName}<span>turn</span></Turn> */}
             </div>
             <BoardWrapper>
                 {squares.map(el => 
                     <Square 
                         key={el.id}
                         isWinnerSquare={el.isWinnerSquare}
-                        onClick={() => !winner.status && handleClickOnSquare(el.id, userNumber)}
+                        onClick={() => !winner.status && handleClickOnSquare(el.id, players.currentTurn === 0 ? 1 : 2)}
                     >
                         <span>
                             {renderMark(el.owner)}
