@@ -16,7 +16,7 @@ const MainBoard = props => {
     //or use this to create array of object unique => useState(JSON.parse(JSON.stringify(elements))) 
     const [playerOneSquaresId, setPlayerOneSquaresId] = useState([])
     const [playerTwoSquaresId, setPlayerTwoSquaresId] = useState([])
-  
+
     const handleClickOnSquare = (elementId, uNumber) => {
         let tempArray = JSON.parse(JSON.stringify(squares))
         const playerOne = [...playerOneSquaresId]
@@ -40,6 +40,7 @@ const MainBoard = props => {
         winnerConditions.forEach(condition => {
             if (condition.every(squareNum => playerOne.includes(squareNum))) {setWinner({status: true, id: 1, condition}); winnerCondition = condition}
             if (condition.every(squareNum => playerTwo.includes(squareNum))) {setWinner({status: true, id: 2, condition}); winnerCondition = condition}
+            // The every() method tests whether all elements in the array pass the test implemented by the provided function. It returns a Boolean value.
         })
 
         tempArray.forEach(square => {
@@ -49,6 +50,34 @@ const MainBoard = props => {
         })
 
         setSquares(tempArray)
+    }
+
+    const getGameData = async (code) => {
+        try{
+            const tempArray = squares
+            const playerOne = [...playerOneSquaresId]
+            const playerTwo = [...playerTwoSquaresId]
+
+            let res = await getGameDataApi(code) 
+            if(res.status === 200){
+                tempArray.forEach(item => {
+                    item.owner = res.data.gameBoard[item.id]
+                    // id: 0, owner: 0, isWinnerSquare: false
+                    if(res.data.gameBoard[item.id] === 1) playerOne.push(item.id)
+                    else if(res.data.gameBoard[item.id] === 2) playerTwo.push(item.id)
+                    else return
+                })
+                
+                setSquares(tempArray)
+                setPlayerOneSquaresId(playerOne)
+                setPlayerTwoSquaresId(playerTwo)
+            }
+        }catch(error){
+            if(error.status === 404) {
+                navigate("/create-game");
+            }
+            console.log(error);
+        }
     }
 
     // const handleRefresh = () => {
@@ -67,20 +96,6 @@ const MainBoard = props => {
                 return 'O'
             default:
                 return null
-        }
-    }
-
-    const getGameData = async (code) => {
-        try{
-            let res = await getGameDataApi(code) 
-            if(res.status === 200){
-                console.log('res', res);
-            }
-        }catch(error){
-            if(error.status === 404) {
-                navigate("/create-game");
-            }
-            console.log(error);
         }
     }
 
