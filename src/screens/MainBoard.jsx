@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { elements, winnerConditions } from '../constants'
 import { getGameDataApi, updateGameData } from '../api/game'
 import { useLocation, useNavigate } from 'react-router-dom';
+import customToast from '../utils/toast'
 
 
 let getGameDataInterval;
@@ -51,12 +52,10 @@ const MainBoard = props => {
             }
         })
         try{
-            let res = await updateGameData({code: inviteCode, board: webServerBoard})
-            console.log(res);
+            await updateGameData({code: inviteCode, board: webServerBoard})
         }catch(error){
-
+            customToast.error('could not update board!');
         }
-        
         setSquares(tempArray)
     }
 
