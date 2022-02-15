@@ -24,11 +24,11 @@ const MainBoard = props => {
 
     const handleClickOnSquare = (elementId, uNumber) => {
         let tempArray = JSON.parse(JSON.stringify(squares))
-        
+        let nextPlayer = players.currentTurn === 0 ? 1 : 0
         const playerOne = [...playerOneSquaresId]
         const playerTwo = [...playerTwoSquaresId]
 
-        updatePlayers(players => ({...players, currentTurn: players.currentTurn === 0 ? 1 : 0}))
+        updatePlayers(players => ({...players, currentTurn: nextPlayer }))
 
         if(tempArray[elementId].owner === 0) {
             tempArray[elementId].owner = uNumber
@@ -38,10 +38,10 @@ const MainBoard = props => {
         else return
         setPlayerOneSquaresId(playerOne)
         setPlayerTwoSquaresId(playerTwo)
-        checkWinner(playerOne, playerTwo, tempArray)
+        checkWinner(playerOne, playerTwo, tempArray, nextPlayer)
     }
 
-    const checkWinner = async (playerOne, playerTwo, tempArray) => {
+    const checkWinner = async (playerOne, playerTwo, tempArray, nextPlayer) => {
         let winnerCondition = []
         let webServerBoard = tempArray.map(item => item.owner)
         
@@ -57,7 +57,11 @@ const MainBoard = props => {
             }
         })
         try{
-            await updateGameData({code: inviteCode, board: webServerBoard})
+            await updateGameData({
+                code: inviteCode, 
+                board: webServerBoard,
+                nextPlayer
+            })
         }catch(error){
             customToast.error('could not update board!');
         }
@@ -127,7 +131,14 @@ const MainBoard = props => {
     return (
         <Container>
             <div className='pageHeader'>
-                {/* <Turn>{playerName}<span>turn</span></Turn> */}
+                <Turn>
+                    <span>
+                    {players.currentTurn === 0 
+                        ?   players.player_x
+                        :   players.player_o
+                    }
+                    </span> 
+                </Turn>
             </div>
             <BoardWrapper>
                 {squares.map(el => 
@@ -202,7 +213,8 @@ const Square = styled.div`
 const Turn = styled.span`
     margin: 10px;
     span{
-        font-size: 20px;
+        text-transform: capitalize;
+        font-size: 25px;
         font-weight: bold
     }
 `
