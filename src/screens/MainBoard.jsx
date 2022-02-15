@@ -12,7 +12,8 @@ const MainBoard = props => {
     const { inviteCode } = location.state
     const [userNumber, setUserNumber] = useState(1)
     const [winner, setWinner] = useState({status: false, id: null})
-    const [squares, setSquares] = useState(JSON.parse(JSON.stringify(elements)))
+    const [squares, setSquares] = useState(elements.map(item => {return {...item}}))
+    //or use this to create array of object unique => useState(JSON.parse(JSON.stringify(elements))) 
     const [playerOneSquaresId, setPlayerOneSquaresId] = useState([])
     const [playerTwoSquaresId, setPlayerTwoSquaresId] = useState([])
 
