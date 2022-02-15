@@ -16,7 +16,6 @@ const MainBoard = props => {
     const [playerOneSquaresId, setPlayerOneSquaresId] = useState([])
     const [playerTwoSquaresId, setPlayerTwoSquaresId] = useState([])
 
-    
     const handleClickOnSquare = (elementId, uNumber) => {
         let tempArray = JSON.parse(JSON.stringify(squares))
         const playerOne = [...playerOneSquaresId]
@@ -62,9 +61,9 @@ const MainBoard = props => {
     const renderMark = (owner) => {
         switch (owner) {
             case 1:
-                return 'O'
-            case 2:
                 return 'X'
+            case 2:
+                return 'O'
             default:
                 return null
         }
@@ -74,7 +73,7 @@ const MainBoard = props => {
         try{
             let res = await getGameDataApi(code) 
             if(res.status === 200){
-                console.log('res', res);
+                // console.log('res', res);
             }
         }catch(error){
             if(error.status === 404) {
