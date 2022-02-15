@@ -19,6 +19,7 @@ const MainBoard = props => {
     })
     const [winner, setWinner] = useState({status: false, id: 4, condition: []})
     const [squares, setSquares] = useState(elements.map(item => {return {...item}}))
+  
     //or use this to create array of object unique => useState(JSON.parse(JSON.stringify(elements))) 
     const [playerOneSquaresId, setPlayerOneSquaresId] = useState([])
     const [playerTwoSquaresId, setPlayerTwoSquaresId] = useState([])
@@ -46,17 +47,20 @@ const MainBoard = props => {
         let winnerCondition = []
         let webServerBoard = tempArray.map(item => item.owner)
         let webServerWinner = 4
+        let webServerWinnerCondition = new Array(3).fill(0)
 
         winnerConditions.forEach(condition => {
             if (condition.every(squareNum => playerOne.includes(squareNum))) {
                 setWinner({status: true, id: 1, condition}) 
                 winnerCondition = condition
                 webServerWinner = 0
+                webServerWinnerCondition = condition
             }
             if (condition.every(squareNum => playerTwo.includes(squareNum))) {
                 setWinner({status: true, id: 2, condition})
                 winnerCondition = condition
                 webServerWinner = 1
+                webServerWinnerCondition = condition
             }
             // The every() method tests whether all elements in the array pass the test implemented by the provided function. It returns a Boolean value.
         })
@@ -71,6 +75,7 @@ const MainBoard = props => {
                 code: inviteCode, 
                 board: webServerBoard,
                 winner: webServerWinner,
+                winCondition: webServerWinnerCondition,
                 nextPlayer
             })
         }catch(error){
@@ -78,7 +83,7 @@ const MainBoard = props => {
         }
         setSquares(tempArray)
     }
-
+  
     const getGameData = async (code) => {
         try{
             const tempArray = squares
@@ -86,6 +91,7 @@ const MainBoard = props => {
             const playerTwo = [...playerTwoSquaresId]
 
             let res = await getGameDataApi(code)
+            // console.log(res);
             if(res.status === 200){
                 updatePlayers({
                     player_x: res.data.playerX,
@@ -93,10 +99,16 @@ const MainBoard = props => {
                     currentTurn: res.data.nextPlayer
                 })
                 if(res.data.winner !== 4) {
-                    setWinner(winner => ({
-                        ...winner,
-                        status: true, id: res.data.winner
-                    }))
+                    setWinner({
+                        status: true, 
+                        id: res.data.winner,
+                        condition: res.data.winCondition
+                    })
+                    tempArray.forEach(square => {
+                        if(res.data.winCondition.includes(square.id)){
+                            square.isWinnerSquare = true
+                        }
+                    })
                 }
                 tempArray.forEach(item => {
                     item.owner = res.data.gameBoard[item.id]
@@ -117,13 +129,14 @@ const MainBoard = props => {
         }
     }
 
-    // const handleRefresh = () => {
-    //     setUserNumber(1)
-    //     setSquares(JSON.parse(JSON.stringify(elements)))
-    //     setWinner({status: false, id: null})
-    //     setPlayerOneSquaresId([])
-    //     setPlayerTwoSquaresId([])
-    // }
+    const handleGoBack = () => {
+        navigate("/create-game");
+        // setUserNumber(1)
+        // setSquares(JSON.parse(JSON.stringify(elements)))
+        // setWinner({status: false, id: null})
+        // setPlayerOneSquaresId([])
+        // setPlayerTwoSquaresId([])
+    }
 
     const renderMark = (owner) => {
         switch (owner) {
@@ -189,9 +202,9 @@ const MainBoard = props => {
                     </Square>
                 )}
             </BoardWrapper>
-            {/* <RefreshButton onClick={handleRefresh}>
-                <span>Refresh</span>
-            </RefreshButton> */}
+            <RefreshButton onClick={handleGoBack}>
+                <span>Back to create game</span>
+            </RefreshButton>
         </Container>
     )
 }
