@@ -173,7 +173,7 @@ const MainBoard = props => {
 
     const noticeBoard = () => {
         if(winner.status) {
-            if(winner.id === 0) return <span>Winner is: {players.player_x}</span>
+            if(winner.id === 0) return <span> Winner is: {players.player_x}</span>
             else if(winner.id === 1) return <span>Winner is: {players.player_o}</span>
         }else if(winner.id === 3) {
             return <span>OOPS. No one won!</span>
@@ -194,7 +194,7 @@ const MainBoard = props => {
     return (
         <Container>
             <div className='pageHeader'>
-                <Turn>
+                <Turn hasWinner={winner.status}>
                     {noticeBoard()}
                 </Turn>
             </div>
@@ -273,7 +273,8 @@ const Turn = styled.span`
     span{
         text-transform: capitalize;
         font-size: 25px;
-        font-weight: bold
+        font-weight: bold;
+        color: ${p => p.hasWinner ? '#ff9300' : '#000'}
     }
 `
 const RefreshButton = styled.button`
