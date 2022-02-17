@@ -22,7 +22,7 @@ const MainBoard = props => {
     //or use this to create array of object unique => useState(JSON.parse(JSON.stringify(elements))) 
     const [playerOneSquaresId, setPlayerOneSquaresId] = useState([])
     const [playerTwoSquaresId, setPlayerTwoSquaresId] = useState([])
-    console.log(squares);
+
     const handleClickOnSquare = (elementId, uNumber) => {
         let tempArray = JSON.parse(JSON.stringify(squares))
         let nextPlayer = players.currentTurn === 0 ? 1 : 0
@@ -88,7 +88,7 @@ const MainBoard = props => {
         }
         setSquares(tempArray)
     }
-  
+
     const getGameData = async (code) => {
         try{
             const tempArray = squares
@@ -96,14 +96,13 @@ const MainBoard = props => {
             const playerTwo = [...playerTwoSquaresId]
 
             let res = await getGameDataApi(code)
-            // console.log(res.data);
+            
             if(res.status === 200){
                 updatePlayers({
                     player_x: res.data.playerX,
                     player_o: res.data.playerO,
                     currentTurn: res.data.nextPlayer
                 })
-                console.log('res.data.winner', res.data.winner);
                 if(res.data.winner < 3) {
                     setWinner({
                         status: true, 
@@ -114,6 +113,12 @@ const MainBoard = props => {
                         if(res.data.winCondition.includes(square.id)){
                             square.isWinnerSquare = true
                         }
+                    })
+                }else if(res.data.winner === 3) {
+                    setWinner({
+                        status: false, 
+                        id: res.data.winner,
+                        condition: []
                     })
                 }
                 tempArray.forEach(item => {
@@ -166,6 +171,18 @@ const MainBoard = props => {
         return bool
     }
 
+    const noticeBoard = () => {
+        if(winner.status) {
+            if(winner.id === 0) return <span>Winner is: {players.player_x}</span>
+            else if(winner.id === 1) return <span>Winner is: {players.player_o}</span>
+        }else if(winner.id === 3) {
+            return <span>OOPS. No one won!</span>
+        }else{
+            if(players.currentTurn === 0) return <span>{players.player_x}</span>
+            else if(players.currentTurn === 1) return <span>{players.player_o}</span>
+        }
+    }
+
     useEffect(() => {
         //call a interval to call API and get game data to simulate a game live
         getGameDataInterval = setInterval(() => getGameData(inviteCode), 1000)
@@ -178,21 +195,7 @@ const MainBoard = props => {
         <Container>
             <div className='pageHeader'>
                 <Turn>
-                    {winner.status 
-                        ?   <span>
-                                Winner is:
-                                {winner.id === 0
-                                    ?   ' ' + players.player_x
-                                    :   ' ' + players.player_o
-                                }
-                            </span>
-                        :   <span>
-                                {players.currentTurn === 0 
-                                    ?   players.player_x
-                                    :   players.player_o
-                                }
-                            </span> 
-                    }
+                    {noticeBoard()}
                 </Turn>
             </div>
             <BoardWrapper>
