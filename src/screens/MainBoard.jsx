@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { elements, winnerConditions } from '../constants'
-import { getGameDataApi, updateGameData } from '../api/game'
+import { getGameDataApi, updateGameData, leaveTheGame } from '../api/game'
 import { useLocation, useNavigate } from 'react-router-dom';
 import customToast from '../utils/toast'
 import { useUserContext } from '../hooks/useUserContext'
@@ -198,6 +198,17 @@ const MainBoard = props => {
             if(players.currentTurn === 0) return <span>{players.player_x}</span>
             else if(players.currentTurn === 1) return <span>{players.player_o}</span>
         }
+    }
+
+    
+    const handleLeaveTheGame = async () => {
+        let myTurnInGame = ''
+        //******************* THIS IS NOT WORKING CORRECTLY AND SEEMS STATUS ARE GONE BEFORE I COMPARE THE THE VARIABLES ******************* */
+        if(user.userInfo.username === players.player_x) myTurnInGame = 'x'
+       
+        console.log(myTurnInGame);
+        let res = await leaveTheGame({inviteCode, myTurnInGame})
+        console.log(res);
     }
 
     useEffect(() => {

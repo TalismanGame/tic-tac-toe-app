@@ -20,6 +20,12 @@ export const updateGameData = async data => {
     return await fetchAPI({url: `/game/update`, method: 'PUT', data})
 }
 
+export const leaveTheGame = async data => {
+    return await fetchAPI({url: `/game/leave`, method: 'PUT', data})
+}
+
+
+
 
 
 
