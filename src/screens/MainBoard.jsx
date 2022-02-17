@@ -19,11 +19,10 @@ const MainBoard = props => {
     })
     const [winner, setWinner] = useState({status: false, id: 4, condition: []})
     const [squares, setSquares] = useState(elements.map(item => {return {...item}}))
-  
     //or use this to create array of object unique => useState(JSON.parse(JSON.stringify(elements))) 
     const [playerOneSquaresId, setPlayerOneSquaresId] = useState([])
     const [playerTwoSquaresId, setPlayerTwoSquaresId] = useState([])
-
+    console.log(squares);
     const handleClickOnSquare = (elementId, uNumber) => {
         let tempArray = JSON.parse(JSON.stringify(squares))
         let nextPlayer = players.currentTurn === 0 ? 1 : 0
@@ -68,6 +67,8 @@ const MainBoard = props => {
             // The every() method tests whether all elements in the array pass the test implemented by the provided function. It returns a Boolean value.
         })
 
+        if(winnerCondition.length === 0 && tempArray.every(item => item.owner !== 0)) webServerWinner = 3
+  
         tempArray.forEach(square => {
             if(winnerCondition.includes(square.id)){
                 square.isWinnerSquare = true
@@ -95,14 +96,15 @@ const MainBoard = props => {
             const playerTwo = [...playerTwoSquaresId]
 
             let res = await getGameDataApi(code)
-            console.log(res.data);
+            // console.log(res.data);
             if(res.status === 200){
                 updatePlayers({
                     player_x: res.data.playerX,
                     player_o: res.data.playerO,
                     currentTurn: res.data.nextPlayer
                 })
-                if(res.data.winner !== 4) {
+                console.log('res.data.winner', res.data.winner);
+                if(res.data.winner < 3) {
                     setWinner({
                         status: true, 
                         id: res.data.winner,
