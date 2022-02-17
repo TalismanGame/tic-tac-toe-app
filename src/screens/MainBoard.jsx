@@ -48,6 +48,7 @@ const MainBoard = props => {
         let webServerBoard = tempArray.map(item => item.owner)
         let webServerWinner = 4
         let webServerWinnerCondition = new Array(3).fill(0)
+        let gameStatus = 1
 
         winnerConditions.forEach(condition => {
             if (condition.every(squareNum => playerOne.includes(squareNum))) {
@@ -55,12 +56,14 @@ const MainBoard = props => {
                 winnerCondition = condition
                 webServerWinner = 0
                 webServerWinnerCondition = condition
+                gameStatus = 3
             }
             if (condition.every(squareNum => playerTwo.includes(squareNum))) {
                 setWinner({status: true, id: 2, condition})
                 winnerCondition = condition
                 webServerWinner = 1
                 webServerWinnerCondition = condition
+                gameStatus = 3
             }
             // The every() method tests whether all elements in the array pass the test implemented by the provided function. It returns a Boolean value.
         })
@@ -76,6 +79,7 @@ const MainBoard = props => {
                 board: webServerBoard,
                 winner: webServerWinner,
                 winCondition: webServerWinnerCondition,
+                gameStatus,
                 nextPlayer
             })
         }catch(error){
@@ -91,7 +95,7 @@ const MainBoard = props => {
             const playerTwo = [...playerTwoSquaresId]
 
             let res = await getGameDataApi(code)
-            // console.log(res);
+            console.log(res.data);
             if(res.status === 200){
                 updatePlayers({
                     player_x: res.data.playerX,
