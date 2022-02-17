@@ -142,11 +142,28 @@ const MainBoard = props => {
 
     const handleGoBack = () => {
         navigate("/create-game");
-        // setUserNumber(1)
-        // setSquares(JSON.parse(JSON.stringify(elements)))
-        // setWinner({status: false, id: null})
-        // setPlayerOneSquaresId([])
-        // setPlayerTwoSquaresId([])
+    }
+
+    const backButtonText = () => {
+        
+        let text = ''
+        switch (winner.id) {
+            case 4:
+                text = 'Finish the game'
+                break;
+            case 3:
+                text = 'Back to menu'
+                break;
+            case 1:
+                text = 'Play another game'
+                break;
+            case 0:
+                text = 'Play another game'
+                break;
+            default:
+                break;
+        }
+        return text
     }
 
     const renderMark = (owner) => {
@@ -212,7 +229,7 @@ const MainBoard = props => {
                 )}
             </BoardWrapper>
             <RefreshButton onClick={handleGoBack}>
-                <span>Back to create game</span>
+                <span>{backButtonText()}</span>
             </RefreshButton>
         </Container>
     )
