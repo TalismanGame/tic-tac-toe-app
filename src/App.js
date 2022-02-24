@@ -9,15 +9,7 @@ import CustomRouter from './routes'
 import { UserContextProvider } from "./context/UserContext";
 import { GameContextProvider } from "./context/GameContext";
 
-function App() {
-  // const dispatch = useDispatch()
-
-  // useEffect(() => {
-  //   dispatch(changeUserInfo({
-  //     name: 'hossein',
-  //     age: 26
-  //   }))
-  // }, [])
+const App = () => {
 
   return (
     <>
