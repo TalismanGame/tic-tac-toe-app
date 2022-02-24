@@ -24,7 +24,6 @@ const App = () => {
         draggable
         pauseOnHover
       />
-      
       <UserContextProvider>
         <GameContextProvider>
           <CustomRouter />
