@@ -199,7 +199,6 @@ const MainBoard = props => {
             else if(players.currentTurn === 1) return <span>{players.player_o}</span>
         }
     }
-
     
     const handleLeaveTheGame = async () => {
         let myTurnInGame = ''

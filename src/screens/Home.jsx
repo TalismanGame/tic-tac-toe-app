@@ -14,7 +14,6 @@ const Home = props => {
     const navigate = useNavigate();
     const { localStorage } = window
     const user = useUserContext()
-    // const reduxUser = useSelector(state => state.general)
 
     const [authForm, updateAuthForm] = useState({
         username: '',
