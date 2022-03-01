@@ -14,9 +14,17 @@ const WaitingRoom = props => {
     const navigate = useNavigate()
     const { inviteCode } = location.state
 
-    const saveCodeToClipboard = () => {
-        window.navigator.clipboard.writeText(inviteCode)
-        customToast.success('code copied!');
+    const saveCodeToClipboard = async () => {
+        if(navigator.clipboard) {
+            try{
+                await navigator.clipboard.writeText(inviteCode)
+                customToast.success('Code copied!')
+            }catch(error) {
+                customToast.error('Cant save code as your connection is not secure and over http protocol :(. Please mark and save it yourself')
+            }
+        }else{
+            customToast.error('cant save code as your connection is not secure and over http protocol :(. Please mark and save it yourself')
+        }
     }
 
     const getGameState = async (code) => {
