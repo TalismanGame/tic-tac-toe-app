@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { Container, Row, Col } from 'react-bootstrap'
 import boardInBackground from '../assets/images/board_background.png';
@@ -10,9 +10,36 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 let getGameStateInterval;
 const WaitingRoom = props => {
+    const ws = useRef(null);
     const location = useLocation()
     const navigate = useNavigate()
     const { inviteCode } = location.state
+    const [isPaused, setPause] = useState(false);
+
+    useEffect(() => {
+        ws.current = new WebSocket('ws://localhost:8000/ws/game-status');
+        ws.current.onopen = () => {
+            ws.current.send(JSON.stringify({"code": inviteCode}))
+        };
+        ws.current.onclose = () => console.log("ws closed");
+    
+        return () => {
+          ws.current.close();
+        };
+    }, []);
+
+    useEffect(() => {
+        if (!ws.current) return;
+    
+        ws.current.onmessage = (e) => {
+          if (isPaused) return;
+                const message = JSON.parse(e.data);
+                let { payload } = message
+                payload = JSON.parse(payload)
+                console.log('payload', payload)
+                
+            };
+    }, [isPaused]);
 
     const saveCodeToClipboard = async () => {
         if(navigator.clipboard) {
@@ -35,13 +62,13 @@ const WaitingRoom = props => {
         }
     }
 
-    useEffect(() => {
-        //call a interval to call API and get game state and if its started redirect to game
-        getGameStateInterval = setInterval(() => getGameState(inviteCode), 1000)
-        return () => {
-            clearInterval(getGameStateInterval)
-        }
-    }, [])
+    // useEffect(() => {
+    //     //call a interval to call API and get game state and if its started redirect to game
+    //     getGameStateInterval = setInterval(() => getGameState(inviteCode), 1000)
+    //     return () => {
+    //         clearInterval(getGameStateInterval)
+    //     }
+    // }, [])
 
     return (
         <StyledContainer>
