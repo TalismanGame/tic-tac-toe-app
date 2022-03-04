@@ -10,7 +10,8 @@ import Home from '../screens/Home'
 import CreateGame from '../screens/CreateGame'
 import WaitingRoom from '../screens/WaitingRoom'
 import NotFoundPage from '../screens/NotFoundPage'
-import PrivateRoute from './PrivateRouts'
+import PrivateRoutes from './PrivateRoutes'
+import AuthRoutes from './AuthRoutes'
 
 const CustomRouter = props => {
   
@@ -18,30 +19,42 @@ const CustomRouter = props => {
     <Routes>
       <Route 
         path="/" 
-        element={<Home />}
+        element={
+          <AuthRoutes>
+            <Home />
+          </AuthRoutes>
+        }
+      />
+      <Route 
+        path="/home" 
+        element={
+          <AuthRoutes>
+            <Home />
+          </AuthRoutes>
+        }
       />
       <Route 
         path="/create-game/*" 
         element={
-          <PrivateRoute>
+          <PrivateRoutes>
             <CreateGame />
-          </PrivateRoute>
+          </PrivateRoutes>
         }
       />
       <Route 
         path="/waiting-room/" 
         element={
-          <PrivateRoute>
+          <PrivateRoutes>
             <WaitingRoom />
-          </PrivateRoute>
+          </PrivateRoutes>
         }
       />
       <Route 
         path="/board/*" 
         element={
-          <PrivateRoute>
+          <PrivateRoutes>
             <MainBoard />
-          </PrivateRoute>
+          </PrivateRoutes>
         }
       />
       <Route 
