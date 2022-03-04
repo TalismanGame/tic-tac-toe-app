@@ -16,28 +16,29 @@ const WaitingRoom = props => {
     const [isPaused, setPause] = useState(false);
 
     useEffect(() => {
-        ws.current = new WebSocket('ws://localhost:8000/ws/game-status');
+        ws.current = new WebSocket('ws://localhost:8000/ws/game-status')
         ws.current.onopen = () => {
             ws.current.send(JSON.stringify({"code": inviteCode}))
-        };
-        ws.current.onclose = () => console.log("ws closed");
+            console.log('opened')
+        }
+        ws.current.onclose = () => console.log("ws closed")
     
         return () => {
-          ws.current.close();
-        };
-    }, []);
+          ws.current.close()
+        }
+    }, [])
 
     useEffect(() => {
-        if (!ws.current) return;
+        if (!ws.current) return
     
         ws.current.onmessage = (e) => {
           if (isPaused) return;
-                const message = JSON.parse(e.data);
+                const message = JSON.parse(e.data)
                 let { payload } = message
                 payload = JSON.parse(payload)
                 if(payload === 1) handleRedirectPlayerToGame()
-            };
-    }, [isPaused]);
+            }
+    }, [isPaused])
 
     const saveCodeToClipboard = async () => {
         if(navigator.clipboard) {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { elements, winnerConditions } from '../constants'
 import { getGameDataApi, updateGameData, leaveTheGame } from '../api/game'
@@ -6,11 +6,13 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import customToast from '../utils/toast'
 import { useUserContext } from '../hooks/useUserContext'
 
-let getGameDataInterval;
+let getGameDataInterval
 const MainBoard = props => {
+    const ws = useRef(null);
     const location = useLocation()
     const navigate = useNavigate()
     const user = useUserContext()
+    const [isPaused, setPause] = useState(false);
     const { inviteCode } = location.state
     const [players, updatePlayers] = useState({
         player_x: '',
@@ -84,60 +86,85 @@ const MainBoard = props => {
                 nextPlayer
             })
         }catch(error){
-            customToast.error('could not update board!');
+            customToast.error('could not update board!')
         }
         setSquares(tempArray)
     }
 
+    useEffect(() => {
+        ws.current = new WebSocket('ws://localhost:8000/ws/game-data')
+        ws.current.onopen = () => {
+            ws.current.send(JSON.stringify({"code": inviteCode}))
+            console.log('opened')
+
+        }
+        ws.current.onclose = () => console.log("ws closed")
+    
+        return () => {
+          ws.current.close()
+        }
+    }, [])
+
+    useEffect(() => {
+        if (!ws.current) return
+    
+        ws.current.onmessage = (e) => {
+          if (isPaused) return
+                const message = JSON.parse(e.data)
+                let { payload } = message
+                //question ********* why my payload is not in JSON type? *********
+                // payload = JSON.parse(payload)
+                if(payload) updateStates(payload)
+            }
+    }, [isPaused])
+
     const getGameData = async (code) => {
         try{
-            const tempArray = squares
-            const playerOne = [...playerOneSquaresId]
-            const playerTwo = [...playerTwoSquaresId]
-
             let res = await getGameDataApi(code)
-            
-            if(res.status === 200){
-                updatePlayers({
-                    player_x: res.data.playerX,
-                    player_o: res.data.playerO,
-                    currentTurn: res.data.nextPlayer
-                })
-                if(res.data.winner < 3) {
-                    setWinner({
-                        status: true, 
-                        id: res.data.winner,
-                        condition: res.data.winCondition
-                    })
-                    tempArray.forEach(square => {
-                        if(res.data.winCondition.includes(square.id)){
-                            square.isWinnerSquare = true
-                        }
-                    })
-                }else if(res.data.winner === 3) {
-                    setWinner({
-                        status: false, 
-                        id: res.data.winner,
-                        condition: []
-                    })
-                }
-                tempArray.forEach(item => {
-                    item.owner = res.data.gameBoard[item.id]
-                    if(res.data.gameBoard[item.id] === 1) playerOne.push(item.id)
-                    else if(res.data.gameBoard[item.id] === 2) playerTwo.push(item.id)
-                    else return
-                })
-                
-                setSquares(tempArray)
-                setPlayerOneSquaresId(playerOne)
-                setPlayerTwoSquaresId(playerTwo)
-            }
+            if(res.status === 200) updateStates(res.data)
         }catch(error){
-            if(error.status === 404) {
-                navigate("/create-game");
-            }
-            console.log(error);
+            if(error.status === 404) navigate("/create-game");
         }
+    }
+
+    const updateStates = (data={}) => {
+        const tempArray = squares
+        const playerOne = [...playerOneSquaresId]
+        const playerTwo = [...playerTwoSquaresId]
+
+        updatePlayers({
+            player_x: data.playerX,
+            player_o: data.playerO,
+            currentTurn: data.nextPlayer
+        })
+        if(data.winner < 3) {
+            setWinner({
+                status: true, 
+                id: data.winner,
+                condition: data.winCondition
+            })
+            tempArray.forEach(square => {
+                if(data.winCondition.includes(square.id)){
+                    square.isWinnerSquare = true
+                }
+            })
+        }else if(data.winner === 3) {
+            setWinner({
+                status: false, 
+                id: data.winner,
+                condition: []
+            })
+        }
+        tempArray.forEach(item => {
+            item.owner = data.gameBoard[item.id]
+            if(data.gameBoard[item.id] === 1) playerOne.push(item.id)
+            else if(data.gameBoard[item.id] === 2) playerTwo.push(item.id)
+            else return
+        })
+        
+        setSquares(tempArray)
+        setPlayerOneSquaresId(playerOne)
+        setPlayerTwoSquaresId(playerTwo)
     }
 
     const handleGoBack = () => {
@@ -210,12 +237,16 @@ const MainBoard = props => {
         console.log(res);
     }
 
+    // useEffect(() => {
+    //     //call a interval to call API and get game data to simulate a game live
+    //     getGameDataInterval = setInterval(() => getGameData(inviteCode), 1000)
+    //     return () => {
+    //         clearInterval(getGameDataInterval)
+    //     }
+    // }, [])
+
     useEffect(() => {
-        //call a interval to call API and get game data to simulate a game live
-        getGameDataInterval = setInterval(() => getGameData(inviteCode), 1000)
-        return () => {
-            clearInterval(getGameDataInterval)
-        }
+        getGameData(inviteCode)
     }, [])
 
     return (
