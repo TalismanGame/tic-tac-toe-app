@@ -8,7 +8,6 @@ import customToast from '../utils/toast'
 import { useLocation, useNavigate } from 'react-router-dom';
 
 
-
 const WaitingRoom = props => {
     const ws = useRef(null);
     const location = useLocation()
@@ -36,8 +35,7 @@ const WaitingRoom = props => {
                 const message = JSON.parse(e.data);
                 let { payload } = message
                 payload = JSON.parse(payload)
-                console.log('payload', payload)
-                
+                if(payload === 1) handleRedirectPlayerToGame()
             };
     }, [isPaused]);
 
@@ -55,13 +53,20 @@ const WaitingRoom = props => {
     }
 
 
-    const getGameState = async (code) => {
-        let res = await getGameStatus(code) 
+    const getGameState = async () => {
+        let res = await getGameStatus(inviteCode) 
+        
         if(res.status === 200){
             // redirect user to the board and game will start
-            if( +res.data.status === 1 ) navigate("/board", { replace: true, state: {inviteCode} });
+            if( +res.data.status === 1 ) handleRedirectPlayerToGame()
         }
     }
+
+    const handleRedirectPlayerToGame = () => navigate("/board", { replace: true, state: {inviteCode} })
+
+    useEffect(() => {
+        getGameState()
+    }, [])
 
     return (
         <StyledContainer>
