@@ -3,12 +3,10 @@ import styled from 'styled-components'
 import { Container, Row, Col } from 'react-bootstrap'
 import boardInBackground from '../assets/images/board_background.png';
 import CustomButton from '../components/CustomButton'
-import { getGameStatus } from '../api/game'
 import customToast from '../utils/toast'
 import { useLocation, useNavigate } from 'react-router-dom';
 
 
-let getGameStateInterval;
 const WaitingRoom = props => {
     const ws = useRef(null);
     const location = useLocation()
@@ -53,22 +51,6 @@ const WaitingRoom = props => {
             customToast.error('cant save code as your connection is not secure and over http protocol :(. Please mark and save it yourself')
         }
     }
-
-    const getGameState = async (code) => {
-        let res = await getGameStatus(code) 
-        if(res.status === 200){
-            // redirect user to the board and game will start
-            if( +res.data.status === 1 ) navigate("/board", { replace: true, state: {inviteCode} });
-        }
-    }
-
-    // useEffect(() => {
-    //     //call a interval to call API and get game state and if its started redirect to game
-    //     getGameStateInterval = setInterval(() => getGameState(inviteCode), 1000)
-    //     return () => {
-    //         clearInterval(getGameStateInterval)
-    //     }
-    // }, [])
 
     return (
         <StyledContainer>
@@ -135,3 +117,11 @@ const StyledContainer = styled(Container)`
         }
     }
 `
+
+// const getGameState = async (code) => {
+//     let res = await getGameStatus(code) 
+//     if(res.status === 200){
+//         // redirect user to the board and game will start
+//         if( +res.data.status === 1 ) navigate("/board", { replace: true, state: {inviteCode} });
+//     }
+// }
