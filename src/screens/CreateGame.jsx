@@ -34,6 +34,7 @@ const CreateGame = props => {
             setInviteCodeLoading(false)
             console.log('error in joining to game', error);
             if(error.status === 404) customToast.error('game not found!');
+            if(error.status === 400) customToast.error('Your code is wrong!');
         }
     }
 
