@@ -96,7 +96,6 @@ const MainBoard = props => {
         ws.current.onopen = () => {
             ws.current.send(JSON.stringify({"code": inviteCode}))
             console.log('opened')
-
         }
         ws.current.onclose = () => console.log("ws closed")
     
