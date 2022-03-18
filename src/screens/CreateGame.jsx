@@ -56,19 +56,6 @@ const CreateGame = props => {
         }
         updateLoading(false)
     }
-    
-    // ********** use this to purge game state and update the context ************
-    // ************** you may never need this :)
-    // useEffect(() => {
-    //     window.localStorage.removeItem('game')
-    //     gameObj.updateGame({
-    //         status: null,
-    //         generatedCode: undefined,
-    //         inviteCode: ''
-    //     })
-    // }, [])
-    // ********** use this to purge game state and update the context ************
-    
 
     return (
         <StyledContainer>
