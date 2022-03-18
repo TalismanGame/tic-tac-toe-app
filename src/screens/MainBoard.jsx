@@ -112,7 +112,8 @@ const MainBoard = props => {
                 const message = JSON.parse(e.data)
                 let { payload } = message
                 //question ********* why my payload is not in JSON type? *********
-                // payload = JSON.parse(payload)
+                //answer is easy. you just parse JSON file 2 lines above :)
+                //payload = JSON.parse(payload)
                 if(payload) updateStates(payload)
             }
     }, [isPaused])
