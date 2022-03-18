@@ -2,7 +2,7 @@ const NotFoundPage = () => {
     return (
         <div>
             {/* complete this screen before release */}
-            hello
+            oops! page not found!
         </div>
     )
 }
