@@ -237,14 +237,6 @@ const MainBoard = props => {
         console.log(res);
     }
 
-    // useEffect(() => {
-    //     //call a interval to call API and get game data to simulate a game live
-    //     getGameDataInterval = setInterval(() => getGameData(inviteCode), 1000)
-    //     return () => {
-    //         clearInterval(getGameDataInterval)
-    //     }
-    // }, [])
-
     useEffect(() => {
         getGameData(inviteCode)
     }, [])
