@@ -227,15 +227,15 @@ const MainBoard = props => {
         }
     }
     
-    const handleLeaveTheGame = async () => {
-        let myTurnInGame = ''
-        //******************* THIS IS NOT WORKING CORRECTLY AND SEEMS STATUS ARE GONE BEFORE I COMPARE THE THE VARIABLES ******************* */
-        if(user.userInfo.username === players.player_x) myTurnInGame = 'x'
+    // const handleLeaveTheGame = async () => {
+    //     let myTurnInGame = ''
+    //     //******************* THIS IS NOT WORKING CORRECTLY AND SEEMS STATUS ARE GONE BEFORE I COMPARE THE THE VARIABLES ******************* */
+    //     if(user.userInfo.username === players.player_x) myTurnInGame = 'x'
        
-        console.log(myTurnInGame);
-        let res = await leaveTheGame({inviteCode, myTurnInGame})
-        console.log(res);
-    }
+    //     console.log(myTurnInGame);
+    //     let res = await leaveTheGame({inviteCode, myTurnInGame})
+    //     console.log(res);
+    // }
 
     useEffect(() => {
         getGameData(inviteCode)
