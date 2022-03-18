@@ -7,7 +7,6 @@ import { getGameStatus } from '../api/game'
 import customToast from '../utils/toast'
 import { useLocation, useNavigate } from 'react-router-dom';
 
-
 const WaitingRoom = props => {
     const ws = useRef(null);
     const location = useLocation()
