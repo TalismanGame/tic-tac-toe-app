@@ -8,7 +8,7 @@ react project as a PWA app of game
 ## Quick Overview
 
 ```sh
-clone repo
+git clone
 yarn install
 yarn dev
 ```
