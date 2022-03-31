@@ -22,8 +22,7 @@ The page will automatically reload if you make changes to the code.<br>
 You will see the build errors and lint warnings in the console.
 
 
-### `npm run build` or `yarn build`
-
+### `npm run build` or `yarn run build`
 Builds the app for production to the `build` folder.<br>
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
