@@ -37,7 +37,7 @@ For Playing you also need to clone and run backend repo. so with both repo up an
 
 ## Contributing
 
-We'd love to have your helping hand on `tic tac tow app`!for more information on what we're looking for and how to get started.
+We'd love to have your helping hand on `tic tac tow app`!for more information on what we're looking for and how to get started. aslo if you have further question please email me on - [mbozorgi604@gmail.com](mbozorgi604@gmail.com) 
 
 ## Acknowledgements
 
