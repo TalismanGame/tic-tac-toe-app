@@ -7,7 +7,6 @@ const defaultGameDetails = {
 }
 
 const GameContext = createContext();
-
 const GameContextProvider = ({children}) => {
     const { localStorage } = window
     let myStoredGameInfo = localStorage.getItem('game')

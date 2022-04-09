@@ -9,7 +9,6 @@ const defaultUserObj = {
 }
 
 const UserContext = createContext();
-
 const UserContextProvider = ({ children }) => {
   const { localStorage } = window
   let myStoredUserInfo = localStorage.getItem('user')
