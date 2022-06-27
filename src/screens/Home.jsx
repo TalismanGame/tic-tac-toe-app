@@ -68,7 +68,7 @@ const Home = props => {
     }
 
     const authButtonRenderer = () => {
-        let button = new Object()
+        let button = {}
 
         if(isLoginProcess) {
             button = {
@@ -89,7 +89,7 @@ const Home = props => {
     }
 
     const authSubRouterRenderer = () => {
-        let subRouter = new Object()
+        let subRouter = {}
 
         if(isLoginProcess) {
             subRouter = {

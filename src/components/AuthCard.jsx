@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, Button } from 'react-bootstrap'
+import { Form } from 'react-bootstrap'
 import CustomButton from '../components/CustomButton'
 
 const AuthCard = ({title, formData, onChange, button, subRouters}) => {

@@ -12,7 +12,6 @@ const WaitingRoom = props => {
     const location = useLocation()
     const navigate = useNavigate()
     const { inviteCode } = location.state
-    const [isPaused, setPause] = useState(false);
 
     useEffect(() => {
         ws.current = new WebSocket('ws://localhost:8000/ws/game-status')
@@ -31,13 +30,12 @@ const WaitingRoom = props => {
         if (!ws.current) return
     
         ws.current.onmessage = (e) => {
-          if (isPaused) return;
-                const message = JSON.parse(e.data)
-                let { payload } = message
-                payload = JSON.parse(payload)
-                if(payload === 1) handleRedirectPlayerToGame()
-            }
-    }, [isPaused])
+            const message = JSON.parse(e.data)
+            let { payload } = message
+            payload = JSON.parse(payload)
+            if(payload === 1) handleRedirectPlayerToGame()
+        }
+    }, [])
 
     const saveCodeToClipboard = async () => {
         if(navigator.clipboard) {

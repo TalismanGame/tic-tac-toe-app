@@ -1,7 +1,5 @@
 import axios from 'axios';
 import {baseURL} from '../constants/api'
-import { formatURL } from '../utils'
-
 
 const fetchAPI = function ({ url, method, data, hasFile, forcedToken, version, config, headers }) {
     return new Promise((resolve, reject) => {

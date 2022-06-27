@@ -1,8 +1,7 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {
     Routes,
     Route,
-    Redirect,
 } from "react-router-dom"
 
 import MainBoard from '../screens/MainBoard'

@@ -1,18 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { elements, winnerConditions } from '../constants'
-import { getGameDataApi, updateGameData, leaveTheGame } from '../api/game'
+import { getGameDataApi, updateGameData } from '../api/game'
 import { useLocation, useNavigate } from 'react-router-dom';
 import customToast from '../utils/toast'
 import { useUserContext } from '../hooks/useUserContext'
 
-let getGameDataInterval
 const MainBoard = props => {
     const ws = useRef(null);
     const location = useLocation()
     const navigate = useNavigate()
     const user = useUserContext()
-    const [isPaused, setPause] = useState(false);
     const { inviteCode } = location.state
     const [players, updatePlayers] = useState({
         player_x: '',
@@ -108,15 +106,14 @@ const MainBoard = props => {
         if (!ws.current) return
     
         ws.current.onmessage = (e) => {
-          if (isPaused) return
-                const message = JSON.parse(e.data)
-                let { payload } = message
-                //question ********* why my payload is not in JSON type? *********
-                //answer is easy. you just parse JSON file 2 lines above :)
-                //payload = JSON.parse(payload)
-                if(payload) updateStates(payload)
+        const message = JSON.parse(e.data)
+        let { payload } = message
+        //question ********* why my payload is not in JSON type? *********
+        //answer is easy. you just parse JSON file 2 lines above :)
+        //payload = JSON.parse(payload)
+        if(payload) updateStates(payload)
             }
-    }, [isPaused])
+    }, [])
 
     const getGameData = async (code) => {
         try{
