@@ -3,7 +3,7 @@ let baseURL = ''
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
     baseURL = 'http://localhost:8000/api/v1'
 } else {
-    baseURL = 'http://46.101.208.155/api/v1'
+    baseURL = 'https://api.talismangame.ir/api/v1'
 }
 
 export { baseURL }
