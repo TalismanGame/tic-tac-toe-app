@@ -6,6 +6,7 @@ import CustomButton from '../components/CustomButton'
 import { getGameStatus } from '../api/game'
 import customToast from '../utils/toast'
 import { useLocation, useNavigate } from 'react-router-dom';
+import { wsURL } from '../constants/api';
 
 const WaitingRoom = props => {
     const ws = useRef(null);
@@ -14,7 +15,7 @@ const WaitingRoom = props => {
     const { inviteCode } = location.state
 
     useEffect(() => {
-        ws.current = new WebSocket('wss://api.talismangame.ir/ws/game-status')
+        ws.current = new WebSocket(wsURL + '/game-status')
         ws.current.onopen = () => {
             ws.current.send(JSON.stringify({"code": inviteCode}))
             console.log('opened')

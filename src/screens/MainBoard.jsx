@@ -5,6 +5,7 @@ import { getGameDataApi, updateGameData } from '../api/game'
 import { useLocation, useNavigate } from 'react-router-dom';
 import customToast from '../utils/toast'
 import { useUserContext } from '../hooks/useUserContext'
+import { wsURL } from '../constants/api';
 
 const MainBoard = props => {
     const ws = useRef(null);
@@ -90,7 +91,7 @@ const MainBoard = props => {
     }
 
     useEffect(() => {
-        ws.current = new WebSocket('wss://api.talismangame.ir/ws/game-data')
+        ws.current = new WebSocket(wsURL + '/game-data')
         ws.current.onopen = () => {
             ws.current.send(JSON.stringify({"code": inviteCode}))
             console.log('opened')
