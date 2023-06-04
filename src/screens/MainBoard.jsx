@@ -90,7 +90,7 @@ const MainBoard = props => {
     }
 
     useEffect(() => {
-        ws.current = new WebSocket('ws://localhost:8000/ws/game-data')
+        ws.current = new WebSocket('ws://api.talismangame.ir/ws/game-data')
         ws.current.onopen = () => {
             ws.current.send(JSON.stringify({"code": inviteCode}))
             console.log('opened')
