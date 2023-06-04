@@ -30,9 +30,7 @@ const WaitingRoom = props => {
         if (!ws.current) return
     
         ws.current.onmessage = (e) => {
-            console.log('sdsdfsdf', e);
             const message = JSON.parse(e.data)
-            console.log('message', message);
             let { payload } = message
             payload = JSON.parse(payload)
             if(payload === 1) handleRedirectPlayerToGame()
