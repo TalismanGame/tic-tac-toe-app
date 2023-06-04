@@ -15,7 +15,7 @@ const WaitingRoom = props => {
     const { inviteCode } = location.state
 
     useEffect(() => {
-        ws.current = new WebSocket(wsURL + '/game-status')
+        ws.current = new WebSocket(wsURL + 'game-status')
         ws.current.onopen = () => {
             ws.current.send(JSON.stringify({"code": inviteCode}))
             console.log('opened')
