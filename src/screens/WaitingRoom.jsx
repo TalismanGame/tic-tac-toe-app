@@ -31,7 +31,6 @@ const WaitingRoom = props => {
         if (!ws.current) return
     
         ws.current.onmessage = (e) => {
-            console.log('e', e);
             const message = JSON.parse(e.data)
             let { payload } = message
             payload = JSON.parse(payload)
